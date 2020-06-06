@@ -36,7 +36,7 @@ export function entry() {
       MapBtnTexture.frame = new PIXI.Rectangle(0, MapBtnOriginHeight / 10 * nowMapStep, MapBtnTexture.width, MapBtnOriginHeight / 10);
       let MapBtn = new PIXI.Sprite(MapBtnTexture);
       MapBtn.anchor.set(0.5, 0.5);
-      MapBtn.x = gameWidth * 0.3;
+      MapBtn.x = gameWidth * 0.25;
       MapBtn.y = gameHeight * 0.68;
       MapBtn.buttonMode = true;
       MapBtn.interactive = true;
