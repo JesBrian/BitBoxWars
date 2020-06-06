@@ -1,6 +1,8 @@
 import loading from './components/Loading/index.js';
 import { entry } from './views/EntryView/index.js';
 
+import { play } from "./views/PlayView/index.js";
+
 /**
  * 游戏主入口
  */
@@ -20,7 +22,7 @@ export default function main() {
   window.app = app;
   window.loadResource = loading;
 
-  entry();
-
+  // entry();
+  play();
   return app;
 }
