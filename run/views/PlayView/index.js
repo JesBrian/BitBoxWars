@@ -4,6 +4,7 @@
  */
 export const PLAY_LOAD_RESOURCE = {
   Stripes: 'images/stripes.png',
+  TouchBtn: 'images/ui/play/TouchBtn.png',
   TouchBar: 'images/ui/play/TouchBar.png',
   StatusBar: 'images/ui/play/StatusBar.png',
 };
@@ -11,7 +12,15 @@ export const PLAY_LOAD_RESOURCE = {
 /**
  * 游戏游玩入口
  */
-export function play() {
+export function play(options = {}) {
+  Object.assign(options, {
+    map: 1,
+    player: 1,
+    network: false,
+  });
+
+  console.log(options);
+
   loadResource(PLAY_LOAD_RESOURCE).then(renderPlay);
 
   function renderPlay() {
@@ -38,10 +47,18 @@ export function play() {
       let TouchBar = PIXI.Sprite.from('TouchBar');
       TouchBar.width = 228;
       TouchBar.height = 228;
-      TouchBar.x = 138;
-      TouchBar.y = gameHeight - 68;
-      TouchBar.anchor.set(0, 1);
-      playViewStage.addChild(TouchBar);
+      TouchBar.x = TouchBar.width + 38;
+      TouchBar.y = gameHeight - TouchBar.height / 2 - 68;
+      TouchBar.anchor.set(0.5, 0.5);
+
+      let TouchBtn = PIXI.Sprite.from('TouchBtn');
+      TouchBtn.width = 88;
+      TouchBtn.height = 88;
+      TouchBtn.x = TouchBar.x;
+      TouchBtn.y = TouchBar.y;
+      TouchBtn.anchor.set(0.5, 0.5);
+
+      playViewStage.addChild(TouchBar, TouchBtn);
     }
 
     function _playContainer() {

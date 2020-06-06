@@ -22,7 +22,7 @@ export default function main() {
   window.app = app;
   window.loadResource = loading;
 
-  // entry();
-  play();
+  entry();
+  // play();
   return app;
 }
