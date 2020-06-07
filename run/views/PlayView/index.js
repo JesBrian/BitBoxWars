@@ -4,8 +4,11 @@
  */
 export const PLAY_LOAD_RESOURCE = {
   Stripes: 'images/stripes.png',
+  TopBar: 'images/ui/play/TopBar.png',
+  ComboBar: 'images/ui/play/ComboBar.png',
   TouchBtn: 'images/ui/play/TouchBtn.png',
   TouchBar: 'images/ui/play/TouchBar.png',
+  FireBtn: 'images/ui/play/FireBtn.png',
   StatusBar: 'images/ui/play/StatusBar.png',
 };
 
@@ -24,23 +27,33 @@ export function play(options = {}) {
   loadResource(PLAY_LOAD_RESOURCE).then(renderPlay);
 
   function renderPlay() {
-    console.log('renderPlay');
     const playViewStage = new PIXI.Container();
-    app.stage.addChild(playViewStage);
+    let FireBtnTexture, FireBtnOriginWidth = 0;
 
+    app.stage.addChild(playViewStage);
     _statusContainer();
     _controllerContainer();
     _playContainer();
+    app.ticker.add(_eventLoop);
 
     function _statusContainer() {
+      let TopBar = PIXI.Sprite.from('TopBar');
+      TopBar.anchor.set(0.5, 0);
+      TopBar.x = gameWidth / 2;
+      TopBar.y = 0;
+      TopBar.width = TopBar.width * 1.38;
+      TopBar.height = TopBar.height * 1.38;
       let spriteFrame = new PIXI.Sprite.from('StatusBar');
       spriteFrame.x = 38;
       spriteFrame.y = 20;
       let spriteFrame2 = new PIXI.Sprite.from('StatusBar');
-      // spriteFrame2.anchor.set(0, 0);
-      spriteFrame2.x = 38;
-      spriteFrame2.y = spriteFrame.height + 25;
-      playViewStage.addChild(spriteFrame, spriteFrame2);
+      spriteFrame2.x = spriteFrame.x;
+      spriteFrame2.y = spriteFrame.height + spriteFrame.y + 3;
+      let ComboBar = PIXI.Sprite.from('ComboBar');
+      ComboBar.anchor.set(1, 0);
+      ComboBar.x = gameWidth;
+      ComboBar.y = 100;
+      playViewStage.addChild(TopBar, ComboBar, spriteFrame, spriteFrame2);
     }
 
     function _controllerContainer() {
@@ -58,10 +71,31 @@ export function play(options = {}) {
       TouchBtn.y = TouchBar.y;
       TouchBtn.anchor.set(0.5, 0.5);
 
-      playViewStage.addChild(TouchBar, TouchBtn);
+      FireBtnTexture = PIXI.utils.TextureCache['FireBtn'];
+      FireBtnOriginWidth = FireBtnTexture.width;
+      FireBtnTexture.frame = new PIXI.Rectangle(0, 0, FireBtnOriginWidth / 2, FireBtnTexture.height);
+      let FireBtn = new PIXI.Sprite(FireBtnTexture);
+      FireBtn.width = 168;
+      FireBtn.height = 168;
+      FireBtn.x = gameWidth - FireBtn.width - 68;
+      FireBtn.y = TouchBar.y + 18;
+      FireBtn.anchor.set(0.5, 0.5);
+      FireBtn.buttonMode = true;
+      FireBtn.interactive = true;
+      FireBtn.on('pointertap', () => {
+        FireBtnTexture.frame = new PIXI.Rectangle(FireBtnOriginWidth / 2, 0, FireBtnOriginWidth / 2, FireBtnTexture.height);
+        setTimeout(() => {
+          FireBtnTexture.frame = new PIXI.Rectangle(0, 0, FireBtnOriginWidth / 2, FireBtnTexture.height);
+        }, 1000);
+      });
+
+      playViewStage.addChild(TouchBar, TouchBtn, FireBtn);
     }
 
     function _playContainer() {
+    }
+
+    function _eventLoop(detail) {
     }
   }
 }

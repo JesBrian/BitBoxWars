@@ -107,6 +107,7 @@ export function entry() {
 
     function _changeStage() {
       app.ticker.remove(_eventLoop);
+      // app.stage.removeChild(entryViewStage);
       setTimeout(() => app.stage.removeChild(entryViewStage), 1500);
     }
   }
