@@ -10,6 +10,7 @@ const LOADING_RESOURCE = {
  * @returns {Promise}
  */
 export default function loading(resource = []) {
+  const loader = app.loader;
   return new Promise((resolve, reject) => {
     let loadingStage = new PIXI.Container(),
       loadingError = false, loadingFinish = false,
@@ -17,7 +18,7 @@ export default function loading(resource = []) {
       bunny1, sprite, texture;
 
     if (loading.hasInit) loadComplete();
-    else app.loader.add('loadingBg', 'images/loading/loadingBg.png').add('loadingBar', 'images/loading/loadingBar.png').load(loadComplete);
+    else loader.add('loadingBg', 'images/loading/loadingBg.png').add('loadingBar', 'images/loading/loadingBar.png').load(loadComplete);
 
     app.stage.addChild(loadingStage);
 
@@ -41,10 +42,10 @@ export default function loading(resource = []) {
 
       if (resource) {
         for (let key in resource) {
-          // TODO: 判断是否是曾经加载过的资源
-          app.loader.add(key, resource[key]);
+          // 判断以前没加载过该资源才添加到待加载资源列表内
+          if (!loader.resources[key]) loader.add(key, resource[key]);
         }
-        app.loader.once('error', (loader) => {
+        loader.once('error', (loader) => {
           loadingError = true;
           return reject();
         }).once('complete', () => {
