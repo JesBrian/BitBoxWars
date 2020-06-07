@@ -22,7 +22,12 @@ export function entry() {
     const entryViewStage = new PIXI.Container();
     app.stage.addChild(entryViewStage);
 
-    let nowMapStep = 1, StartBtn, StartArrow;
+
+    const MapIconTexture = PIXI.utils.TextureCache['MapIcon'], MapIconOriginWidth = MapIconTexture.width,
+      MapBtnTexture = PIXI.utils.TextureCache['MapBtn'], MapBtnOriginHeight = MapBtnTexture.height;
+    let nowMapStep = 0, loopStep = 0,
+      MapBtn, MapLeftArrowBtn, MapRightArrowBtn,
+      StartBtn, StartArrow;
 
     _renderMap();
     _renderPlayer();
@@ -32,41 +37,46 @@ export function entry() {
 
     // 地图
     function _renderMap() {
-      const MapBtnTexture = PIXI.utils.TextureCache['MapBtn'], MapBtnOriginHeight = MapBtnTexture.height;
-      MapBtnTexture.frame = new PIXI.Rectangle(0, MapBtnOriginHeight / 10 * nowMapStep, MapBtnTexture.width, MapBtnOriginHeight / 10);
-      let MapBtn = new PIXI.Sprite(MapBtnTexture);
+      MapIconTexture.frame = new PIXI.Rectangle(MapIconOriginWidth / 5 * nowMapStep, 0, MapIconOriginWidth / 5, MapIconTexture.height);
+      let MapIcon = new PIXI.Sprite(MapIconTexture);
+      MapIcon.anchor.set(0.5, 0.5);
+      MapIcon.x = gameWidth * 0.25;
+      MapIcon.y = gameHeight * 0.35;
+
+      MapBtnTexture.frame = new PIXI.Rectangle(0, MapBtnOriginHeight / 10 * (nowMapStep * 2 + 1), MapBtnTexture.width, MapBtnOriginHeight / 10);
+      MapBtn = new PIXI.Sprite(MapBtnTexture);
       MapBtn.anchor.set(0.5, 0.5);
-      MapBtn.x = gameWidth * 0.25;
-      MapBtn.y = gameHeight * 0.68;
+      MapBtn.x = MapIcon.x;
+      MapBtn.y = MapIcon.y + MapIcon.height / 2 + MapBtn.height;
       MapBtn.buttonMode = true;
       MapBtn.interactive = true;
       MapBtn.on('pointertap', () => _changeMap());
 
-      const LeftArrowBtn = new PIXI.Sprite.from('SingleArrow');
-      LeftArrowBtn.anchor.set(0.5, 0.5);
-      LeftArrowBtn.x = MapBtn.x - MapBtn.width / 2 - LeftArrowBtn.width / 3;
-      LeftArrowBtn.y = MapBtn.y - MapBtn.height - LeftArrowBtn.height - 38;
-      LeftArrowBtn.buttonMode = true;
-      LeftArrowBtn.interactive = true;
-      LeftArrowBtn.rotation = Math.PI;
-      LeftArrowBtn.on('pointertap', () => _changeMap( -2));
+      MapLeftArrowBtn = new PIXI.Sprite.from('SingleArrow');
+      MapLeftArrowBtn.anchor.set(0.5, 0.5);
+      MapLeftArrowBtn.x = MapBtn.x - MapBtn.width / 2 - MapLeftArrowBtn.width / 3 + 28;
+      MapLeftArrowBtn.y = MapIcon.y;
+      MapLeftArrowBtn.buttonMode = true;
+      MapLeftArrowBtn.interactive = true;
+      MapLeftArrowBtn.rotation = Math.PI;
+      MapLeftArrowBtn.on('pointertap', () => _changeMap( -2));
 
-      const RightArrowBtn = new PIXI.Sprite.from('SingleArrow');
-      RightArrowBtn.anchor.set(0.5, 0.5);
-      RightArrowBtn.x = MapBtn.x + MapBtn.width / 2 + RightArrowBtn.width / 3;
-      RightArrowBtn.y = MapBtn.y - MapBtn.height - RightArrowBtn.height - 38;
-      RightArrowBtn.buttonMode = true;
-      RightArrowBtn.interactive = true;
-      RightArrowBtn.on('pointertap', () => _changeMap());
+      MapRightArrowBtn = new PIXI.Sprite.from('SingleArrow');
+      MapRightArrowBtn.anchor.set(0.5, 0.5);
+      MapRightArrowBtn.x = MapBtn.x + MapBtn.width / 2 + MapRightArrowBtn.width / 3 - 28;
+      MapRightArrowBtn.y = MapIcon.y;
+      MapRightArrowBtn.buttonMode = true;
+      MapRightArrowBtn.interactive = true;
+      MapRightArrowBtn.on('pointertap', () => _changeMap());
 
-      entryViewStage.addChild(LeftArrowBtn, RightArrowBtn, MapBtn);
+      entryViewStage.addChild(MapIcon, MapLeftArrowBtn, MapRightArrowBtn, MapBtn);
 
-      function _changeMap(step = 2) {
-        if (nowMapStep % 2 === 0) return;
+      function _changeMap(step = 1) {
         nowMapStep += step;
-        if (nowMapStep < 0) nowMapStep = 10 - Math.abs(nowMapStep);
-        nowMapStep %= 10;
-        MapBtnTexture.frame = new PIXI.Rectangle(0, MapBtnOriginHeight / 10 * nowMapStep, MapBtnTexture.width, MapBtnOriginHeight / 10);
+        if (nowMapStep < 0) nowMapStep = 5 - Math.abs(nowMapStep);
+        nowMapStep %= 5;
+        MapIconTexture.frame = new PIXI.Rectangle(MapIconOriginWidth / 5 * nowMapStep, 0, MapIconOriginWidth / 5, MapIconTexture.height);
+        MapBtnTexture.frame = new PIXI.Rectangle(0, MapBtnOriginHeight / 10 * (nowMapStep * 2 + 1), MapBtnTexture.width, MapBtnOriginHeight / 10);
       }
 
       _renderMap.change = _changeMap;
@@ -79,13 +89,14 @@ export function entry() {
     // 杂项
     function _renderOther() {
       StartBtn = PIXI.Sprite.from('StartBtn');
-      StartBtn.anchor.set(0, 0.5);
-      StartBtn.x = gameWidth - StartBtn.width - 38;
-      StartBtn.y = gameHeight * 0.9;
+      StartBtn.anchor.set(0.5, 0.5);
+      StartBtn.x = gameWidth * 3 / 4;
+      StartBtn.y = gameHeight * 0.85;
       StartBtn.buttonMode = true;
       StartBtn.interactive = true;
       StartBtn.on('pointertap', () => {
-        _renderMap.change(-1);
+        MapBtnTexture.frame = new PIXI.Rectangle(0, MapBtnOriginHeight / 10 * nowMapStep * 2, MapBtnTexture.width, MapBtnOriginHeight / 10);
+
         play({
           map: nowMapStep
         });
@@ -94,19 +105,31 @@ export function entry() {
 
       StartArrow = PIXI.Sprite.from('StartArrow');
       StartArrow.anchor.set(1, 0.5);
-      StartArrow.x = StartBtn.x - 68;
-      StartArrow.y = gameHeight * 0.9;
+      StartArrow.x = StartBtn.x - StartBtn.width / 2 - 68;
+      StartArrow.y = StartBtn.y;
 
       entryViewStage.addChild(StartArrow, StartBtn);
     }
 
     function _eventLoop() {
-      if (StartArrow.x < StartBtn.x - 68) StartArrow.x += 0.8;
-      else StartArrow.x = StartBtn.x - 88;
+      if (StartArrow.x < StartBtn.x - StartBtn.width / 2 - 68) {
+        StartArrow.x += 0.8;
+        MapLeftArrowBtn.x -= 1;
+        MapRightArrowBtn.x += 1;
+      } else {
+        StartArrow.x = StartBtn.x - StartBtn.width / 2 - 88;
+        loopStep++;
+      }
+      if (loopStep === 2) {
+        loopStep = 0;
+        MapLeftArrowBtn.x = MapBtn.x - MapBtn.width / 2 - MapLeftArrowBtn.width / 3 + 18;
+        MapRightArrowBtn.x = MapBtn.x + MapBtn.width / 2 + MapRightArrowBtn.width / 3 - 38;
+      }
     }
 
     function _changeStage() {
       app.ticker.remove(_eventLoop);
+      entryViewStage.removeChild(MapLeftArrowBtn, MapRightArrowBtn, StartArrow, StartBtn);
       // app.stage.removeChild(entryViewStage);
       setTimeout(() => app.stage.removeChild(entryViewStage), 1500);
     }

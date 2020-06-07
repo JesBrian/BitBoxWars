@@ -44,12 +44,10 @@ export default function loading(resource = []) {
           // TODO: 判断是否是曾经加载过的资源
           app.loader.add(key, resource[key]);
         }
-        app.loader.on('error', (loader) => {
+        app.loader.once('error', (loader) => {
           loadingError = true;
           return reject();
-        }).on('progress', (loader) => {
-          console.log('on progress: ', loader.progress);
-        }).on('complete', () => {
+        }).once('complete', () => {
           loadingFinish = true;
           if (_checkEnd()) {
             _finishEvent();
