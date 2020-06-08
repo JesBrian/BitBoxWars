@@ -84,6 +84,8 @@ export function play(options = {}) {
       FireBtn.interactive = true;
       FireBtn.on('pointertap', () => {
         FireBtnTexture.frame = new PIXI.Rectangle(FireBtnOriginWidth / 2, 0, FireBtnOriginWidth / 2, FireBtnTexture.height);
+
+        // TODO: 去抖 && 节流
         setTimeout(() => {
           FireBtnTexture.frame = new PIXI.Rectangle(0, 0, FireBtnOriginWidth / 2, FireBtnTexture.height);
         }, 1000);
@@ -93,6 +95,15 @@ export function play(options = {}) {
     }
 
     function _playContainer() {
+
+      function _renderMap() {
+      }
+
+      function _renderPlayer() {
+      }
+
+      function _renderEnemy() {
+      }
     }
 
     function _eventLoop(detail) {

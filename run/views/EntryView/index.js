@@ -8,6 +8,8 @@ export const ENTRY_LOAD_RESOURCE = {
   MapBtn: 'images/ui/entry/MapBtn.png',
   MapIcon: 'images/ui/entry/MapIcon.png',
   StartBtn: 'images/ui/entry/StartBtn.png',
+  PlayerBg: 'images/ui/entry/PlayerBg.png',
+  PlayerBtn: 'images/ui/entry/PlayerBtn.png',
   StartArrow: 'images/ui/entry/StartArrow.png',
   SingleArrow: 'images/ui/entry/SingleArrow.png',
 };
@@ -27,6 +29,7 @@ export function entry() {
       MapBtnTexture = PIXI.utils.TextureCache['MapBtn'], MapBtnOriginHeight = MapBtnTexture.height;
     let nowMapStep = 0, loopStep = 0,
       MapBtn, MapLeftArrowBtn, MapRightArrowBtn,
+      PlayerBg, PlayerBtn,
       StartBtn, StartArrow;
 
     _renderMap();
@@ -84,13 +87,30 @@ export function entry() {
 
     // 人物
     function _renderPlayer() {
+      PlayerBg = PIXI.Sprite.from('PlayerBg');
+      PlayerBg.anchor.set(0.5, 0.5);
+      PlayerBg.x = gameWidth * 2.8 / 4;
+      PlayerBg.y = gameHeight * 0.4;
+
+      PlayerBtn = PIXI.Sprite.from('PlayerBtn');
+      PlayerBtn.anchor.set(0.5, 0.5);
+      PlayerBtn.x = PlayerBg.x + (PlayerBg.width) / 2 ;
+      PlayerBtn.y = PlayerBg.y;
+      PlayerBtn.width = PlayerBtn.width * 2.2;
+      PlayerBtn.height = PlayerBtn.height * 2.2;
+      PlayerBtn.buttonMode = true;
+      PlayerBtn.interactive = true;
+      PlayerBtn.on('pointertap', () => {
+      });
+
+      entryViewStage.addChild(PlayerBg, PlayerBtn);
     }
 
     // 杂项
     function _renderOther() {
       StartBtn = PIXI.Sprite.from('StartBtn');
       StartBtn.anchor.set(0.5, 0.5);
-      StartBtn.x = gameWidth * 3 / 4;
+      StartBtn.x = PlayerBg.x;
       StartBtn.y = gameHeight * 0.85;
       StartBtn.buttonMode = true;
       StartBtn.interactive = true;
