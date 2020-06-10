@@ -10,6 +10,18 @@ export const PLAY_LOAD_RESOURCE = {
   TouchBar: 'images/ui/play/TouchBar.png',
   FireBtn: 'images/ui/play/FireBtn.png',
   StatusBar: 'images/ui/play/StatusBar.png',
+
+  HeartIcon: 'images/icon/heart.png',
+  Icon0: 'images/icon/0.png',
+  Icon1: 'images/icon/1.png',
+  Icon2: 'images/icon/2.png',
+  Icon3: 'images/icon/3.png',
+  Icon4: 'images/icon/4.png',
+  Icon5: 'images/icon/5.png',
+  Icon6: 'images/icon/6.png',
+  Icon7: 'images/icon/7.png',
+  Icon8: 'images/icon/8.png',
+  Icon9: 'images/icon/9.png',
 };
 
 /**
@@ -48,14 +60,35 @@ export function play(options = {}) {
       let spriteFrame = new PIXI.Sprite.from('StatusBar');
       spriteFrame.x = 38;
       spriteFrame.y = 20;
+      let HeartIcon = PIXI.Sprite.from('HeartIcon');
+      HeartIcon.x = 62;
+      HeartIcon.y = 38;
+      HeartIcon.width = HeartIcon.width * 0.68;
+      HeartIcon.height = HeartIcon.height * 0.68;
       let spriteFrame2 = new PIXI.Sprite.from('StatusBar');
       spriteFrame2.x = spriteFrame.x;
       spriteFrame2.y = spriteFrame.height + spriteFrame.y + 3;
       let ComboBar = PIXI.Sprite.from('ComboBar');
-      ComboBar.anchor.set(1, 0);
+      ComboBar.anchor.set(1, 0.5);
       ComboBar.x = gameWidth;
-      ComboBar.y = 100;
-      playViewStage.addChild(TopBar, ComboBar, spriteFrame, spriteFrame2);
+      ComboBar.y = 105 + ComboBar.height / 2;
+      // 数字
+      let num1 = new PIXI.Sprite.from('Icon0');
+      num1.anchor.set(1, 0.5);
+      num1.x = gameWidth - 25;
+      num1.y = ComboBar.y - 2;
+      num1.height = num1.height * 1.3;
+      let num2 = new PIXI.Sprite.from('Icon0');
+      num2.anchor.set(1, 0.5);
+      num2.x = num1.x - num1.width - 10;
+      num2.y = ComboBar.y - 2;
+      num2.height = num2.height * 1.3;
+      let num3 = new PIXI.Sprite.from('Icon0');
+      num3.anchor.set(1, 0.5);
+      num3.x = num2.x - num2.width - 10;
+      num3.y = ComboBar.y - 2;
+      num3.height = num3.height * 1.3;
+      playViewStage.addChild(TopBar, spriteFrame, HeartIcon, spriteFrame2, ComboBar, num1, num2, num3);
     }
 
     function _controllerContainer() {
