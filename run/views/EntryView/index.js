@@ -132,18 +132,18 @@ export function entry() {
     }
 
     function _eventLoop() {
-      if (StartArrow.x < StartBtn.x - StartBtn.width / 2 - 68) {
-        StartArrow.x += 0.8;
+      if (StartArrow.x < StartBtn.x - StartBtn.width / 2 - 38) {
+        StartArrow.x += 0.88;
         MapLeftArrowBtn.x -= 1;
         MapRightArrowBtn.x += 1;
       } else {
-        StartArrow.x = StartBtn.x - StartBtn.width / 2 - 88;
+        StartArrow.x = StartBtn.x - StartBtn.width / 2 - 68;
         loopStep++;
       }
       if (loopStep === 2) {
         loopStep = 0;
-        MapLeftArrowBtn.x = MapBtn.x - MapBtn.width / 2 - MapLeftArrowBtn.width / 3 + 18;
-        MapRightArrowBtn.x = MapBtn.x + MapBtn.width / 2 + MapRightArrowBtn.width / 3 - 38;
+        MapLeftArrowBtn.x = MapBtn.x - MapBtn.width / 2 - MapLeftArrowBtn.width / 3 + 28;
+        MapRightArrowBtn.x = MapBtn.x + MapBtn.width / 2 + MapRightArrowBtn.width / 3 - 28;
       }
     }
 

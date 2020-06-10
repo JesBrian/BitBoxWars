@@ -24,7 +24,9 @@ export function play(options = {}) {
 
   console.log(options);
 
-  loadResource(PLAY_LOAD_RESOURCE).then(renderPlay);
+  loadResource(PLAY_LOAD_RESOURCE, {
+    top: gameHeight / 5, left: 0
+  }).then(renderPlay);
 
   function renderPlay() {
     const playViewStage = new PIXI.Container();

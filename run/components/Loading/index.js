@@ -9,7 +9,7 @@ const LOADING_RESOURCE = {
  * @param resource
  * @returns {Promise}
  */
-export default function loading(resource = []) {
+export default function loading(resource = [], position = {top: 0, left: 0}) {
   const loader = app.loader;
   return new Promise((resolve, reject) => {
     let loadingStage = new PIXI.Container(),
@@ -25,26 +25,25 @@ export default function loading(resource = []) {
     function loadComplete() {
       bunny1 = PIXI.Sprite.from('loadingBg');
       bunny1.anchor.set(0.5, 0.5);
-      bunny1.x = gameWidth * 0.5;
-      bunny1.y = gameHeight * 0.68;
+      bunny1.x = gameWidth * 0.5 + (position.left || 0);
+      bunny1.y = gameHeight * 0.68 + (position.top || 0);
       loadingStage.addChild(bunny1);
 
       texture = PIXI.utils.TextureCache['loadingBar'];
       texture.frame = new PIXI.Rectangle(0, 0, nowLoading, 32);
       sprite = new PIXI.Sprite(texture);
       sprite.anchor.set(0, 0.5);
-      sprite.x = (gameWidth - bunny1.width) * 0.5;
-      sprite.y = gameHeight * 0.68;
+      sprite.x = (gameWidth - bunny1.width) * 0.5 + (position.left || 0);
+      sprite.y = bunny1.y;
       loadingStage.addChild(sprite);
 
       app.ticker.add(_loadingLoop);
       loading.hasInit = true;
 
       if (resource) {
-        for (let key in resource) {
-          // 判断以前没加载过该资源才添加到待加载资源列表内
-          if (!loader.resources[key]) loader.add(key, resource[key]);
-        }
+        // 判断以前没加载过该资源才添加到待加载资源列表内
+        for (let key in resource) if (!loader.resources[key]) loader.add(key, resource[key]);
+
         loader.once('error', (loader) => {
           loadingError = true;
           return reject();
@@ -70,13 +69,7 @@ export default function loading(resource = []) {
         return resolve();
       }
       nowLoading += 5;
-      loadingStage.removeChild(sprite);
       texture.frame = new PIXI.Rectangle(0, 0, nowLoading, 32);
-      sprite = new PIXI.Sprite(texture);
-      sprite.anchor.set(0, 0.5);
-      sprite.x = (gameWidth - maxLoading) * 0.5;
-      sprite.y = gameHeight * 0.68;
-      loadingStage.addChild(sprite);
     }
 
     function _finishEvent() {
