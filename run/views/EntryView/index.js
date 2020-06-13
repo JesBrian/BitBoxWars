@@ -5,6 +5,7 @@ import { play } from '../PlayView/index.js';
  * 需要加载的资源
  */
 export const ENTRY_LOAD_RESOURCE = {
+  Cover: 'images/Cover.png',
   MapBtn: 'images/ui/entry/MapBtn.png',
   MapIcon: 'images/ui/entry/MapIcon.png',
   StartBtn: 'images/ui/entry/StartBtn.png',
@@ -21,7 +22,14 @@ export function entry() {
   loadResource(ENTRY_LOAD_RESOURCE).then(_renderEntry);
 
   function _renderEntry() {
-    const entryViewStage = new PIXI.Container();
+    const entryViewStage = new PIXI.Container(0x000000);
+    const CoverImg = PIXI.Sprite.from('Cover');
+    CoverImg.x = gameWidth / 2;
+    CoverImg.y = gameHeight / 2;
+    CoverImg.anchor.set(0.5, 0.5);
+    CoverImg.width = gameWidth;
+    CoverImg.height = gameHeight;
+    entryViewStage.addChild(CoverImg);
     app.stage.addChild(entryViewStage);
 
 
