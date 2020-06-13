@@ -58,7 +58,26 @@ const debounce = ({fn, wait, immediate}) => debounceOrThrottle({fn, wait, immedi
  */
 const throttle = ({fn, wait, immediate = true}) => debounceOrThrottle({fn, wait, immediate, executeOncePerWait: true});
 
+/**
+ * 加载子模块
+ * @param moduleName
+ * @returns {Promise}
+ */
+const loadSubModule = (moduleName = '') => {
+  return new Promise((resolve, reject) => {
+    if (!moduleName) return reject(new Error('请输入模块名'));
+    const loadTask = wx.loadSubpackage({
+      name: `${moduleName}Module`,
+      success: res => {
+        return resolve(res);
+      },
+      fail: err => {
+        return reject(err);
+      }
+    });
+  });
+}
 
 export {
-  debounce, throttle
+  debounce, throttle, loadSubModule
 };

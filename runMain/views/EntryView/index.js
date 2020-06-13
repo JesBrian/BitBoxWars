@@ -1,9 +1,12 @@
 
+import { loadSubModule } from '../../../utils/functions.js';
+
 /**
  * 需要加载的资源
  */
 export const ENTRY_LOAD_RESOURCE = {
   Cover: 'assets/images/Cover.png',
+  MenuBtn: 'assets/images/icon/menu.png',
   MapBtn: 'assets/images/ui/entry/MapBtn.png',
   MapIcon: 'assets/images/ui/entry/MapIcon.png',
   StartBtn: 'assets/images/ui/entry/StartBtn.png',
@@ -117,6 +120,25 @@ export function entry() {
 
     // 杂项
     function _renderOther() {
+      let MenuBtnTexture = PIXI.utils.TextureCache['MenuBtn'], MenuBtnOriginWidth = MenuBtnTexture.width;
+      MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 1, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
+      let MenuBtn = new PIXI.Sprite.from(MenuBtnTexture);
+      MenuBtn.x = gameWidth * 2.8 / 4;
+      MenuBtn.y = 0;
+      MenuBtn.width *= 1.5;
+      MenuBtn.height *= 1.5;
+      MenuBtn.anchor.set(0.5, 0);
+      MenuBtn.buttonMode = true;
+      MenuBtn.interactive = true;
+      MenuBtn.on('pointertap', () => {
+        MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 0, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
+
+        // TODO: 去抖 && 节流
+        setTimeout(() => {
+          MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 1, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
+        }, 1000);
+      });
+
       StartBtn = PIXI.Sprite.from('StartBtn');
       StartBtn.anchor.set(0.5, 0.5);
       StartBtn.x = PlayerBg.x;
@@ -126,17 +148,11 @@ export function entry() {
       StartBtn.on('pointertap', () => {
         MapBtnTexture.frame = new PIXI.Rectangle(0, MapBtnOriginHeight / 10 * nowMapStep * 2, MapBtnTexture.width, MapBtnOriginHeight / 10);
 
-        const loadTask = wx.loadSubpackage({
-          name: 'PlayModule',
-          success: res => {
-            play({
-              map: nowMapStep
-            });
-            _changeStage();
-          },
-          fail: err => {
-            console.log(err);
-          }
+        loadSubModule('Play').then(res => {
+          play({
+            map: nowMapStep
+          });
+          _changeStage();
         });
       });
 
@@ -145,7 +161,7 @@ export function entry() {
       StartArrow.x = StartBtn.x - StartBtn.width / 2 - 68;
       StartArrow.y = StartBtn.y;
 
-      entryViewStage.addChild(StartArrow, StartBtn);
+      entryViewStage.addChild(MenuBtn, StartArrow, StartBtn);
     }
 
     function _eventLoop() {
@@ -167,7 +183,6 @@ export function entry() {
     function _changeStage() {
       app.ticker.remove(_eventLoop);
       entryViewStage.removeChild(MapLeftArrowBtn, MapRightArrowBtn, StartArrow, StartBtn);
-      // app.stage.removeChild(entryViewStage);
       setTimeout(() => app.stage.removeChild(entryViewStage), 1500);
     }
   }

@@ -4,7 +4,6 @@
 export const PLAY_LOAD_RESOURCE = {
   // Stripes: 'modules/PlayModule/resources/images/stripes.png',
   TopBar: 'modules/PlayModule/resources/images/TopBar.png',
-  MenuBtn: 'modules/PlayModule/resources/images/MenuBtn.png',
   ComboBar: 'modules/PlayModule/resources/images/ComboBar.png',
   TouchBtn: 'modules/PlayModule/resources/images/TouchBtn.png',
   TouchBar: 'modules/PlayModule/resources/images/TouchBar.png',
@@ -23,6 +22,7 @@ export const PLAY_LOAD_RESOURCE = {
   Icon7: 'assets/images/icon/7.png',
   Icon8: 'assets/images/icon/8.png',
   Icon9: 'assets/images/icon/9.png',
+  MenuBtn: 'assets/images/icon/menu.png',
 };
 
 /**
