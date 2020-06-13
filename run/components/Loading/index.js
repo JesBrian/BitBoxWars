@@ -9,12 +9,22 @@ const LOADING_RESOURCE = {
  * @param resource
  * @returns {Promise}
  */
-export default function loading(resource = [], position = {top: 0, left: 0}) {
-  const loader = app.loader;
+export default function loading(options) {
+  let loadOptions = {
+    resource: [],
+    showProcess: true,
+    position: {top: 0, left: 0}
+  };
+  Object.assign(loadOptions, options);
+
+  let loader = app.loader, {
+    resource, showProcess, position
+  } = loadOptions;
+
   return new Promise((resolve, reject) => {
     let loadingStage = new PIXI.Container(),
       loadingError = false, loadingFinish = false,
-      nowLoading = 10, maxLoading = 699,
+      nowLoading = 10, maxLoading = showProcess ? 699 : 10,
       bunny1, sprite, texture;
 
     if (loading.hasInit) loadComplete();
@@ -27,7 +37,6 @@ export default function loading(resource = [], position = {top: 0, left: 0}) {
       bunny1.anchor.set(0.5, 0.5);
       bunny1.x = gameWidth * 0.5 + (position.left || 0);
       bunny1.y = gameHeight * 0.68 + (position.top || 0);
-      loadingStage.addChild(bunny1);
 
       texture = PIXI.utils.TextureCache['loadingBar'];
       texture.frame = new PIXI.Rectangle(0, 0, nowLoading, 32);
@@ -35,9 +44,10 @@ export default function loading(resource = [], position = {top: 0, left: 0}) {
       sprite.anchor.set(0, 0.5);
       sprite.x = (gameWidth - bunny1.width) * 0.5 + (position.left || 0);
       sprite.y = bunny1.y;
-      loadingStage.addChild(sprite);
 
+      showProcess && loadingStage.addChild(bunny1, sprite);
       app.ticker.add(_loadingLoop);
+
       loading.hasInit = true;
 
       if (resource) {

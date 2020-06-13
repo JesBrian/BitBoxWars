@@ -1,4 +1,3 @@
-
 /**
  * 需要加载的资源
  */
@@ -9,8 +8,8 @@ export const PLAY_LOAD_RESOURCE = {
   TouchBtn: 'images/ui/play/TouchBtn.png',
   TouchBar: 'images/ui/play/TouchBar.png',
   FireBtn: 'images/ui/play/FireBtn.png',
+  SwitchBtn: 'images/ui/play/SwitchBtn.png',
   StatusBar: 'images/ui/play/StatusBar.png',
-
   HeartIcon: 'images/icon/heart.png',
   Icon0: 'images/icon/0.png',
   Icon1: 'images/icon/1.png',
@@ -36,8 +35,11 @@ export function play(options = {}) {
 
   console.log(options);
 
-  loadResource(PLAY_LOAD_RESOURCE, {
-    top: gameHeight / 5, left: 0
+  loadResource({
+    resource: PLAY_LOAD_RESOURCE,
+    position: {
+      top: gameHeight / 5, left: 0
+    }
   }).then(renderPlay);
 
   function renderPlay() {
@@ -110,10 +112,11 @@ export function play(options = {}) {
       FireBtnOriginWidth = FireBtnTexture.width;
       FireBtnTexture.frame = new PIXI.Rectangle(0, 0, FireBtnOriginWidth / 2, FireBtnTexture.height);
       let FireBtn = new PIXI.Sprite(FireBtnTexture);
-      FireBtn.width = 168;
-      FireBtn.height = 168;
+      FireBtn.width = 128;
+      FireBtn.height = 128;
       FireBtn.x = gameWidth - FireBtn.width - 68;
       FireBtn.y = TouchBar.y + 18;
+      FireBtn.rotation = -Math.PI / 4;
       FireBtn.anchor.set(0.5, 0.5);
       FireBtn.buttonMode = true;
       FireBtn.interactive = true;
@@ -126,7 +129,21 @@ export function play(options = {}) {
         }, 1000);
       });
 
-      playViewStage.addChild(TouchBar, TouchBtn, FireBtn);
+      let LeftSwitchBtn = new PIXI.Sprite.from('SwitchBtn');
+      LeftSwitchBtn.anchor.set(0.5, 0.5);
+      LeftSwitchBtn.width = 88;
+      LeftSwitchBtn.height = 88;
+      LeftSwitchBtn.x = FireBtn.x - FireBtn.width / 4 * 2.5;
+      LeftSwitchBtn.y = FireBtn.y + FireBtn.height / 4 * 2.5;
+      let RightSwitchBtn = new PIXI.Sprite.from('SwitchBtn');
+      RightSwitchBtn.anchor.set(0.5, 0.5);
+      RightSwitchBtn.width = 88;
+      RightSwitchBtn.height = 88;
+      RightSwitchBtn.x = FireBtn.x + FireBtn.width / 4 * 2.5;
+      RightSwitchBtn.y = FireBtn.y - FireBtn.height / 4 * 2.5;
+      RightSwitchBtn.rotation = Math.PI;
+
+      playViewStage.addChild(TouchBar, TouchBtn, FireBtn, LeftSwitchBtn, RightSwitchBtn);
     }
 
     function _playContainer() {

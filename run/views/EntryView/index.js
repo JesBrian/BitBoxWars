@@ -19,7 +19,10 @@ export const ENTRY_LOAD_RESOURCE = {
  * 游戏开始入口
  */
 export function entry() {
-  loadResource(ENTRY_LOAD_RESOURCE).then(_renderEntry);
+  loadResource({
+    resource: ENTRY_LOAD_RESOURCE,
+    showProcess: false
+  }).then(_renderEntry);
 
   function _renderEntry() {
     const entryViewStage = new PIXI.Container(0x000000);
