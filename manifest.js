@@ -1,5 +1,5 @@
 import './libs/weapp-adapter';
-import './libs/pixi';
+import './libs/pixi.min.js';
 import './libs/unsafe-eval.min';
 
 window.DOMParser = require('./libs/xmldom/xmldom.js').DOMParser;

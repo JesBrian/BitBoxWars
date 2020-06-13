@@ -10630,7 +10630,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.utils.EventEmitter
 	 * @memberof PIXI.interaction
 	 */
-	var InteractionManager = /*@__PURE__*/(function (EventEmitter) {
+	var InteractionManager = (function (EventEmitter) {
 	    function InteractionManager(renderer, options)
 	    {
 	        EventEmitter.call(this);
@@ -12883,7 +12883,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.resources.Resource
 	 * @memberof PIXI.resources
 	 */
-	var BaseImageResource = /*@__PURE__*/(function (Resource) {
+	var BaseImageResource = (function (Resource) {
 	    function BaseImageResource(source)
 	    {
 	        var width = source.naturalWidth || source.videoWidth || source.width;
@@ -12996,7 +12996,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.resources.BaseImageResource
 	 * @memberof PIXI.resources
 	 */
-	var ImageResource = /*@__PURE__*/(function (BaseImageResource) {
+	var ImageResource = (function (BaseImageResource) {
 	    function ImageResource(source, options)
 	    {
 	        options = options || {};
@@ -13380,7 +13380,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.resources.Resource
 	 * @memberof PIXI.resources
 	 */
-	var BufferResource = /*@__PURE__*/(function (Resource) {
+	var BufferResource = (function (Resource) {
 	    function BufferResource(source, options)
 	    {
 	        var ref = options || {};
@@ -13513,7 +13513,7 @@ var PIXI = (function (exports) {
 	 * @param {object} [options.resourceOptions] - Optional resource options,
 	 *        see {@link PIXI.resources.autoDetectResource autoDetectResource}
 	 */
-	var BaseTexture = /*@__PURE__*/(function (EventEmitter) {
+	var BaseTexture = (function (EventEmitter) {
 	    function BaseTexture(resource, options)
 	    {
 	        if ( resource === void 0 ) { resource = null; }
@@ -14194,7 +14194,7 @@ var PIXI = (function (exports) {
 	 * @param {number} [options.width] - Width of the resource
 	 * @param {number} [options.height] - Height of the resource
 	 */
-	var ArrayResource = /*@__PURE__*/(function (Resource) {
+	var ArrayResource = (function (Resource) {
 	    function ArrayResource(source, options)
 	    {
 	        options = options || {};
@@ -14443,7 +14443,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI.resources
 	 * @param {HTMLCanvasElement} source - Canvas element to use
 	 */
-	var CanvasResource = /*@__PURE__*/(function (BaseImageResource) {
+	var CanvasResource = (function (BaseImageResource) {
 	    function CanvasResource () {
 	        BaseImageResource.apply(this, arguments);
 	    }
@@ -14480,7 +14480,7 @@ var PIXI = (function (exports) {
 	 * @param {number} [options.width] - Width of resource
 	 * @param {number} [options.height] - Height of resource
 	 */
-	var CubeResource = /*@__PURE__*/(function (ArrayResource) {
+	var CubeResource = (function (ArrayResource) {
 	    function CubeResource(source, options)
 	    {
 	        options = options || {};
@@ -14571,7 +14571,7 @@ var PIXI = (function (exports) {
 	 * @param {number} [options.height] Rasterize SVG this high. Aspect ratio preserved if width not specified.
 	 * @param {boolean} [options.autoLoad=true] Start loading right away.
 	 */
-	var SVGResource = /*@__PURE__*/(function (BaseImageResource) {
+	var SVGResource = (function (BaseImageResource) {
 	    function SVGResource(source, options)
 	    {
 	        options = options || {};
@@ -14804,7 +14804,7 @@ var PIXI = (function (exports) {
 	 * Leave at 0 to update at every run.
 	 * @param {boolean} [options.crossorigin=true] - Load image using cross origin
 	 */
-	var VideoResource = /*@__PURE__*/(function (BaseImageResource) {
+	var VideoResource = (function (BaseImageResource) {
 	    function VideoResource(source, options)
 	    {
 	        options = options || {};
@@ -15182,7 +15182,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI.resources
 	 * @param {ImageBitmap} source - Image element to use
 	 */
-	var ImageBitmapResource = /*@__PURE__*/(function (BaseImageResource) {
+	var ImageBitmapResource = (function (BaseImageResource) {
 	    function ImageBitmapResource () {
 	        BaseImageResource.apply(this, arguments);
 	    }
@@ -15256,7 +15256,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.resources.BufferResource
 	 * @memberof PIXI.resources
 	 */
-	var DepthResource = /*@__PURE__*/(function (BufferResource) {
+	var DepthResource = (function (BufferResource) {
 	    function DepthResource () {
 	        BufferResource.apply(this, arguments);
 	    }
@@ -15505,7 +15505,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.BaseTexture
 	 * @memberof PIXI
 	 */
-	var BaseRenderTexture = /*@__PURE__*/(function (BaseTexture) {
+	var BaseRenderTexture = (function (BaseTexture) {
 	    function BaseRenderTexture(options)
 	    {
 	        if (typeof options === 'number')
@@ -15781,7 +15781,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.utils.EventEmitter
 	 * @memberof PIXI
 	 */
-	var Texture = /*@__PURE__*/(function (EventEmitter) {
+	var Texture = (function (EventEmitter) {
 	    function Texture(baseTexture, frame, orig, trim, rotate, anchor)
 	    {
 	        EventEmitter.call(this);
@@ -16440,7 +16440,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.Texture
 	 * @memberof PIXI
 	 */
-	var RenderTexture = /*@__PURE__*/(function (Texture) {
+	var RenderTexture = (function (Texture) {
 	    function RenderTexture(baseRenderTexture, frame)
 	    {
 	        // support for legacy..
@@ -17440,7 +17440,7 @@ var PIXI = (function (exports) {
 	 * @class
 	 * @memberof PIXI
 	 */
-	var Quad = /*@__PURE__*/(function (Geometry) {
+	var Quad = (function (Geometry) {
 	    function Quad()
 	    {
 	        Geometry.call(this);
@@ -17467,7 +17467,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI
 	 * @extends PIXI.Geometry
 	 */
-	var QuadUv = /*@__PURE__*/(function (Geometry) {
+	var QuadUv = (function (Geometry) {
 	    function QuadUv()
 	    {
 	        Geometry.call(this);
@@ -17706,7 +17706,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI.systems
 	 * @extends PIXI.System
 	 */
-	var FilterSystem = /*@__PURE__*/(function (System) {
+	var FilterSystem = (function (System) {
 	    function FilterSystem(renderer)
 	    {
 	        System.call(this, renderer);
@@ -18200,7 +18200,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.System
 	 * @memberof PIXI.systems
 	 */
-	var BatchSystem = /*@__PURE__*/(function (System) {
+	var BatchSystem = (function (System) {
 	    function BatchSystem(renderer)
 	    {
 	        System.call(this, renderer);
@@ -18377,7 +18377,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.System
 	 * @memberof PIXI.systems
 	 */
-	var ContextSystem = /*@__PURE__*/(function (System) {
+	var ContextSystem = (function (System) {
 	    function ContextSystem(renderer)
 	    {
 	        System.call(this, renderer);
@@ -18639,7 +18639,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.System
 	 * @memberof PIXI.systems
 	 */
-	var FramebufferSystem = /*@__PURE__*/(function (System) {
+	var FramebufferSystem = (function (System) {
 	    function FramebufferSystem(renderer)
 	    {
 	        System.call(this, renderer);
@@ -19129,7 +19129,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.System
 	 * @memberof PIXI.systems
 	 */
-	var GeometrySystem = /*@__PURE__*/(function (System) {
+	var GeometrySystem = (function (System) {
 	    function GeometrySystem(renderer)
 	    {
 	        System.call(this, renderer);
@@ -21108,7 +21108,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI
 	 * @extends PIXI.Shader
 	 */
-	var Filter = /*@__PURE__*/(function (Shader) {
+	var Filter = (function (Shader) {
 	    function Filter(vertexSrc, fragmentSrc, uniforms)
 	    {
 	        var program = Program.from(vertexSrc || Filter.defaultVertexSrc,
@@ -21440,7 +21440,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.Filter
 	 * @memberof PIXI
 	 */
-	var SpriteMaskFilter = /*@__PURE__*/(function (Filter) {
+	var SpriteMaskFilter = (function (Filter) {
 	    function SpriteMaskFilter(sprite)
 	    {
 	        var maskMatrix = new Matrix();
@@ -21512,7 +21512,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.System
 	 * @memberof PIXI.systems
 	 */
-	var MaskSystem = /*@__PURE__*/(function (System) {
+	var MaskSystem = (function (System) {
 	    function MaskSystem(renderer)
 	    {
 	        System.call(this, renderer);
@@ -21747,7 +21747,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.System
 	 * @memberof PIXI.systems
 	 */
-	var AbstractMaskSystem = /*@__PURE__*/(function (System) {
+	var AbstractMaskSystem = (function (System) {
 	    function AbstractMaskSystem(renderer)
 	    {
 	        System.call(this, renderer);
@@ -21838,7 +21838,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.System
 	 * @memberof PIXI.systems
 	 */
-	var ScissorSystem = /*@__PURE__*/(function (AbstractMaskSystem) {
+	var ScissorSystem = (function (AbstractMaskSystem) {
 	    function ScissorSystem(renderer)
 	    {
 	        AbstractMaskSystem.call(this, renderer);
@@ -21954,7 +21954,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.System
 	 * @memberof PIXI.systems
 	 */
-	var StencilSystem = /*@__PURE__*/(function (AbstractMaskSystem) {
+	var StencilSystem = (function (AbstractMaskSystem) {
 	    function StencilSystem(renderer)
 	    {
 	        AbstractMaskSystem.call(this, renderer);
@@ -22077,7 +22077,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI.systems
 	 */
 
-	var ProjectionSystem = /*@__PURE__*/(function (System) {
+	var ProjectionSystem = (function (System) {
 	    function ProjectionSystem(renderer)
 	    {
 	        System.call(this, renderer);
@@ -22213,7 +22213,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI.systems
 	 */
 
-	var RenderTextureSystem = /*@__PURE__*/(function (System) {
+	var RenderTextureSystem = (function (System) {
 	    function RenderTextureSystem(renderer)
 	    {
 	        System.call(this, renderer);
@@ -22427,7 +22427,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI.systems
 	 * @extends PIXI.System
 	 */
-	var ShaderSystem = /*@__PURE__*/(function (System) {
+	var ShaderSystem = (function (System) {
 	    function ShaderSystem(renderer)
 	    {
 	        System.call(this, renderer);
@@ -22744,7 +22744,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.System
 	 * @memberof PIXI.systems
 	 */
-	var StateSystem = /*@__PURE__*/(function (System) {
+	var StateSystem = (function (System) {
 	    function StateSystem(renderer)
 	    {
 	        System.call(this, renderer);
@@ -23068,7 +23068,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI.systems
 	 * @extends PIXI.System
 	 */
-	var TextureGCSystem = /*@__PURE__*/(function (System) {
+	var TextureGCSystem = (function (System) {
 	    function TextureGCSystem(renderer)
 	    {
 	        System.call(this, renderer);
@@ -23273,7 +23273,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.System
 	 * @memberof PIXI.systems
 	 */
-	var TextureSystem = /*@__PURE__*/(function (System) {
+	var TextureSystem = (function (System) {
 	    function TextureSystem(renderer)
 	    {
 	        System.call(this, renderer);
@@ -23741,7 +23741,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.utils.EventEmitter
 	 * @memberof PIXI
 	 */
-	var AbstractRenderer = /*@__PURE__*/(function (EventEmitter) {
+	var AbstractRenderer = (function (EventEmitter) {
 	    function AbstractRenderer(system, options)
 	    {
 	        EventEmitter.call(this);
@@ -24058,7 +24058,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI
 	 * @extends PIXI.AbstractRenderer
 	 */
-	var Renderer = /*@__PURE__*/(function (AbstractRenderer) {
+	var Renderer = (function (AbstractRenderer) {
 	    function Renderer(options)
 	    {
 	        if ( options === void 0 ) { options = {}; }
@@ -24527,7 +24527,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.BaseTexture
 	 * @memberof PIXI
 	 */
-	var CubeTexture = /*@__PURE__*/(function (BaseTexture) {
+	var CubeTexture = (function (BaseTexture) {
 	    function CubeTexture () {
 	        BaseTexture.apply(this, arguments);
 	    }
@@ -24773,7 +24773,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI
 	 * @extends PIXI.ObjectRenderer
 	 */
-	var AbstractBatchRenderer = /*@__PURE__*/(function (ObjectRenderer) {
+	var AbstractBatchRenderer = (function (ObjectRenderer) {
 	    function AbstractBatchRenderer(renderer)
 	    {
 	        ObjectRenderer.call(this, renderer);
@@ -25606,7 +25606,7 @@ var PIXI = (function (exports) {
 	 * @class
 	 * @memberof PIXI
 	 */
-	var BatchGeometry = /*@__PURE__*/(function (Geometry) {
+	var BatchGeometry = (function (Geometry) {
 	    function BatchGeometry(_static)
 	    {
 	        if ( _static === void 0 ) { _static = false; }
@@ -25669,7 +25669,7 @@ var PIXI = (function (exports) {
 	        var vertexSize = ref.vertexSize;
 	        var geometryClass = ref.geometryClass;
 
-	    return /*@__PURE__*/(function (AbstractBatchRenderer) {
+	    return (function (AbstractBatchRenderer) {
 	            function BatchPlugin(renderer)
 	        {
 	            AbstractBatchRenderer.call(this, renderer);
@@ -28845,7 +28845,7 @@ var PIXI = (function (exports) {
 	 * @param {string} [baseUrl=''] - The base url for all resources loaded by this loader.
 	 * @param {number} [concurrency=10] - The number of resources to load concurrently.
 	 */
-	var Loader$1 = /*@__PURE__*/(function (ResourceLoader) {
+	var Loader$1 = (function (ResourceLoader) {
 	    function Loader(baseUrl, concurrency)
 	    {
 	        var this$1 = this;
@@ -29100,7 +29100,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.Container
 	 * @memberof PIXI
 	 */
-	var ParticleContainer = /*@__PURE__*/(function (Container) {
+	var ParticleContainer = (function (Container) {
 	    function ParticleContainer(maxSize, properties, batchSize, autoResize)
 	    {
 	        if ( maxSize === void 0 ) { maxSize = 1500; }
@@ -29623,7 +29623,7 @@ var PIXI = (function (exports) {
 	 * @class
 	 * @memberof PIXI
 	 */
-	var ParticleRenderer = /*@__PURE__*/(function (ObjectRenderer) {
+	var ParticleRenderer = (function (ObjectRenderer) {
 	    function ParticleRenderer(renderer)
 	    {
 	        ObjectRenderer.call(this, renderer);
@@ -30933,7 +30933,7 @@ var PIXI = (function (exports) {
 	 * @param {number} [rotation=0] - The rotation of the star in radians, where 0 is vertical
 	 * @return {PIXI.Graphics} This Graphics object. Good for chaining method calls
 	 */
-	var Star = /*@__PURE__*/(function (Polygon) {
+	var Star = (function (Polygon) {
 	    function Star(x, y, points, radius, innerRadius, rotation)
 	    {
 	        innerRadius = innerRadius || radius / 2;
@@ -31427,7 +31427,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.BatchGeometry
 	 * @memberof PIXI
 	 */
-	var GraphicsGeometry = /*@__PURE__*/(function (BatchGeometry) {
+	var GraphicsGeometry = (function (BatchGeometry) {
 	    function GraphicsGeometry()
 	    {
 	        BatchGeometry.call(this);
@@ -32482,7 +32482,7 @@ var PIXI = (function (exports) {
 	 * @class
 	 * @extends PIXI.FillStyle
 	 */
-	var LineStyle = /*@__PURE__*/(function (FillStyle) {
+	var LineStyle = (function (FillStyle) {
 	    function LineStyle () {
 	        FillStyle.apply(this, arguments);
 	    }
@@ -32562,7 +32562,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.Container
 	 * @memberof PIXI
 	 */
-	var Graphics = /*@__PURE__*/(function (Container) {
+	var Graphics = (function (Container) {
 	    function Graphics(geometry)
 	    {
 	        if ( geometry === void 0 ) { geometry = null; }
@@ -33884,7 +33884,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.Container
 	 * @memberof PIXI
 	 */
-	var Sprite = /*@__PURE__*/(function (Container) {
+	var Sprite = (function (Container) {
 	    function Sprite(texture)
 	    {
 	        Container.call(this);
@@ -36186,7 +36186,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.Sprite
 	 * @memberof PIXI
 	 */
-	var Text = /*@__PURE__*/(function (Sprite) {
+	var Text = (function (Sprite) {
 	    function Text(text, style, canvas)
 	    {
 	        canvas = canvas || document.createElement('canvas');
@@ -37401,7 +37401,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.BasePrepare
 	 * @memberof PIXI
 	 */
-	var Prepare = /*@__PURE__*/(function (BasePrepare) {
+	var Prepare = (function (BasePrepare) {
 	    function Prepare(renderer)
 	    {
 	        BasePrepare.call(this, renderer);
@@ -37975,7 +37975,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.Sprite
 	 * @memberof PIXI
 	 */
-	var TilingSprite = /*@__PURE__*/(function (Sprite) {
+	var TilingSprite = (function (Sprite) {
 	    function TilingSprite(texture, width, height)
 	    {
 	        if ( width === void 0 ) { width = 100; }
@@ -38335,7 +38335,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI
 	 * @extends PIXI.ObjectRenderer
 	 */
-	var TilingSpriteRenderer = /*@__PURE__*/(function (ObjectRenderer) {
+	var TilingSpriteRenderer = (function (ObjectRenderer) {
 	    function TilingSpriteRenderer(renderer)
 	    {
 	        ObjectRenderer.call(this, renderer);
@@ -39007,7 +39007,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.Container
 	 * @memberof PIXI
 	 */
-	var BitmapText = /*@__PURE__*/(function (Container) {
+	var BitmapText = (function (Container) {
 	    function BitmapText(text, style)
 	    {
 	        var this$1 = this;
@@ -39763,7 +39763,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.Filter
 	 * @memberof PIXI.filters
 	 */
-	var AlphaFilter = /*@__PURE__*/(function (Filter) {
+	var AlphaFilter = (function (Filter) {
 	    function AlphaFilter(alpha)
 	    {
 	        if ( alpha === void 0 ) { alpha = 1.0; }
@@ -39912,7 +39912,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.Filter
 	 * @memberof PIXI.filters
 	 */
-	var BlurFilterPass = /*@__PURE__*/(function (Filter) {
+	var BlurFilterPass = (function (Filter) {
 	    function BlurFilterPass(horizontal, strength, quality, resolution, kernelSize)
 	    {
 	        kernelSize = kernelSize || 5;
@@ -40056,7 +40056,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.Filter
 	 * @memberof PIXI.filters
 	 */
-	var BlurFilter = /*@__PURE__*/(function (Filter) {
+	var BlurFilter = (function (Filter) {
 	    function BlurFilter(strength, quality, resolution, kernelSize)
 	    {
 	        Filter.call(this);
@@ -40251,7 +40251,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.Filter
 	 * @memberof PIXI.filters
 	 */
-	var ColorMatrixFilter = /*@__PURE__*/(function (Filter) {
+	var ColorMatrixFilter = (function (Filter) {
 	    function ColorMatrixFilter()
 	    {
 	        var uniforms = {
@@ -40854,7 +40854,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.Filter
 	 * @memberof PIXI.filters
 	 */
-	var DisplacementFilter = /*@__PURE__*/(function (Filter) {
+	var DisplacementFilter = (function (Filter) {
 	    function DisplacementFilter(sprite, scale)
 	    {
 	        var maskMatrix = new Matrix();
@@ -40964,7 +40964,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI.filters
 	 *
 	 */
-	var FXAAFilter = /*@__PURE__*/(function (Filter) {
+	var FXAAFilter = (function (Filter) {
 	    function FXAAFilter()
 	    {
 	        // TODO - needs work
@@ -41000,7 +41000,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.Filter
 	 * @memberof PIXI.filters
 	 */
-	var NoiseFilter = /*@__PURE__*/(function (Filter) {
+	var NoiseFilter = (function (Filter) {
 	    function NoiseFilter(noise, seed)
 	    {
 	        if ( noise === void 0 ) { noise = 0.5; }
@@ -42656,7 +42656,7 @@ var PIXI = (function (exports) {
 	     * @deprecated since 5.0.0
 	     * @see PIXI.filters.BlurFilterPass
 	     */
-	    var BlurXFilter = /*@__PURE__*/(function (superclass) {
+	    var BlurXFilter = (function (superclass) {
 	        function BlurXFilter(strength, quality, resolution, kernelSize)
 	        {
 	            deprecation(v5, 'PIXI.filters.BlurXFilter class is deprecated, use PIXI.filters.BlurFilterPass');
@@ -42677,7 +42677,7 @@ var PIXI = (function (exports) {
 	     * @deprecated since 5.0.0
 	     * @see PIXI.filters.BlurFilterPass
 	     */
-	    var BlurYFilter = /*@__PURE__*/(function (superclass) {
+	    var BlurYFilter = (function (superclass) {
 	        function BlurYFilter(strength, quality, resolution, kernelSize)
 	        {
 	            deprecation(v5, 'PIXI.filters.BlurYFilter class is deprecated, use PIXI.filters.BlurFilterPass');
@@ -43017,7 +43017,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.Container
 	 * @memberof PIXI
 	 */
-	var Mesh = /*@__PURE__*/(function (Container) {
+	var Mesh = (function (Container) {
 	    function Mesh(geometry, shader, state, drawMode)// vertices, uvs, indices, drawMode)
 	    {
 	        if ( drawMode === void 0 ) { drawMode = exports.DRAW_MODES.TRIANGLES; }
@@ -43500,7 +43500,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI
 	 * @extends PIXI.Shader
 	 */
-	var MeshMaterial = /*@__PURE__*/(function (Shader) {
+	var MeshMaterial = (function (Shader) {
 	    function MeshMaterial(uSampler, options)
 	    {
 	        var uniforms = {
@@ -43659,7 +43659,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI
 	 * @extends PIXI.Geometry
 	 */
-	var MeshGeometry = /*@__PURE__*/(function (Geometry) {
+	var MeshGeometry = (function (Geometry) {
 	    function MeshGeometry(vertices, uvs, index)
 	    {
 	        Geometry.call(this);
@@ -43713,7 +43713,7 @@ var PIXI = (function (exports) {
 	 * http://www.opensource.org/licenses/mit-license
 	 */
 
-	var PlaneGeometry = /*@__PURE__*/(function (MeshGeometry) {
+	var PlaneGeometry = (function (MeshGeometry) {
 	    function PlaneGeometry(width, height, segWidth, segHeight)
 	    {
 	        if ( width === void 0 ) { width = 100; }
@@ -43806,7 +43806,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI
 	 *
 	 */
-	var RopeGeometry = /*@__PURE__*/(function (MeshGeometry) {
+	var RopeGeometry = (function (MeshGeometry) {
 	    function RopeGeometry(width, points, textureScale)
 	    {
 	        if ( width === void 0 ) { width = 200; }
@@ -44020,7 +44020,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI
 	 *
 	 */
-	var SimpleRope = /*@__PURE__*/(function (Mesh) {
+	var SimpleRope = (function (Mesh) {
 	    function SimpleRope(texture, points, textureScale)
 	    {
 	        if ( textureScale === void 0 ) { textureScale = 0; }
@@ -44077,7 +44077,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI
 	 *
 	 */
-	var SimplePlane = /*@__PURE__*/(function (Mesh) {
+	var SimplePlane = (function (Mesh) {
 	    function SimplePlane(texture, verticesX, verticesY)
 	    {
 	        var planeGeometry = new PlaneGeometry(texture.width, texture.height, verticesX, verticesY);
@@ -44161,7 +44161,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.Mesh
 	 * @memberof PIXI
 	 */
-	var SimpleMesh = /*@__PURE__*/(function (Mesh) {
+	var SimpleMesh = (function (Mesh) {
 	    function SimpleMesh(texture, vertices, uvs, indices, drawMode)
 	    {
 	        if ( texture === void 0 ) { texture = Texture.EMPTY; }
@@ -44248,7 +44248,7 @@ var PIXI = (function (exports) {
 	 * @memberof PIXI
 	 *
 	 */
-	var NineSlicePlane = /*@__PURE__*/(function (SimplePlane) {
+	var NineSlicePlane = (function (SimplePlane) {
 	    function NineSlicePlane(texture, leftWidth, topHeight, rightWidth, bottomHeight)
 	    {
 	        SimplePlane.call(this, Texture.WHITE, 4, 4);
@@ -44553,7 +44553,7 @@ var PIXI = (function (exports) {
 	 * @extends PIXI.Sprite
 	 * @memberof PIXI
 	 */
-	var AnimatedSprite = /*@__PURE__*/(function (Sprite) {
+	var AnimatedSprite = (function (Sprite) {
 	    function AnimatedSprite(textures, autoUpdate)
 	    {
 	        Sprite.call(this, textures[0] instanceof Texture ? textures[0] : textures[0].texture);
