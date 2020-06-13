@@ -1,7 +1,7 @@
 window.WebGLRenderingContext = true;
 import './manifest';
 import WXLoadPlugin from './libs/load/wxcache';
-import App from './run/main';
+import App from './runMain/main.js';
 
 WXLoadPlugin.boot('assets');
 PIXI.Loader.registerPlugin(WXLoadPlugin);

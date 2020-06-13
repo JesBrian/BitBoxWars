@@ -1,8 +1,6 @@
 import loading from './components/Loading/index.js';
 import { entry } from './views/EntryView/index.js';
 
-import { play } from "./views/PlayView/index.js";
-
 /**
  * 游戏主入口
  */
@@ -18,11 +16,10 @@ export default function main() {
     point.x = x * scaleX;
     point.y = y * scaleY;
   };
-  app.loader.baseUrl = 'assets';
+  app.loader.baseUrl = '';
   window.app = app;
   window.loadResource = loading;
 
   entry();
-  // play();
   return app;
 }

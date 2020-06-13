@@ -2,40 +2,40 @@
  * 需要加载的资源
  */
 export const PLAY_LOAD_RESOURCE = {
-  Stripes: 'images/stripes.png',
-  TopBar: 'images/ui/play/TopBar.png',
-  MenuBtn: 'images/ui/play/MenuBtn.png',
-  ComboBar: 'images/ui/play/ComboBar.png',
-  TouchBtn: 'images/ui/play/TouchBtn.png',
-  TouchBar: 'images/ui/play/TouchBar.png',
-  FireBtn: 'images/ui/play/FireBtn.png',
-  LeftSwitchBtn: 'images/ui/play/LeftSwitchBtn.png',
-  RightSwitchBtn: 'images/ui/play/RightSwitchBtn.png',
-  StatusBar: 'images/ui/play/StatusBar.png',
-  HeartIcon: 'images/icon/heart.png',
-  Icon0: 'images/icon/0.png',
-  Icon1: 'images/icon/1.png',
-  Icon2: 'images/icon/2.png',
-  Icon3: 'images/icon/3.png',
-  Icon4: 'images/icon/4.png',
-  Icon5: 'images/icon/5.png',
-  Icon6: 'images/icon/6.png',
-  Icon7: 'images/icon/7.png',
-  Icon8: 'images/icon/8.png',
-  Icon9: 'images/icon/9.png',
+  // Stripes: 'modules/PlayModule/resources/images/stripes.png',
+  TopBar: 'modules/PlayModule/resources/images/TopBar.png',
+  MenuBtn: 'modules/PlayModule/resources/images/MenuBtn.png',
+  ComboBar: 'modules/PlayModule/resources/images/ComboBar.png',
+  TouchBtn: 'modules/PlayModule/resources/images/TouchBtn.png',
+  TouchBar: 'modules/PlayModule/resources/images/TouchBar.png',
+  FireBtn: 'modules/PlayModule/resources/images/FireBtn.png',
+  LeftSwitchBtn: 'modules/PlayModule/resources/images/LeftSwitchBtn.png',
+  RightSwitchBtn: 'modules/PlayModule/resources/images/RightSwitchBtn.png',
+  StatusBar: 'modules/PlayModule/resources/images/StatusBar.png',
+  HeartIcon: 'assets/images/icon/heart.png',
+  Icon0: 'assets/images/icon/0.png',
+  Icon1: 'assets/images/icon/1.png',
+  Icon2: 'assets/images/icon/2.png',
+  Icon3: 'assets/images/icon/3.png',
+  Icon4: 'assets/images/icon/4.png',
+  Icon5: 'assets/images/icon/5.png',
+  Icon6: 'assets/images/icon/6.png',
+  Icon7: 'assets/images/icon/7.png',
+  Icon8: 'assets/images/icon/8.png',
+  Icon9: 'assets/images/icon/9.png',
 };
 
 /**
  * 游戏游玩入口
  */
 export function play(options = {}) {
-  Object.assign(options, {
-    map: 1,
+  const playOptions = {
+    map: 0,
     player: 1,
     network: false,
-  });
+  };
 
-  console.log(options);
+  Object.assign(playOptions, options);
 
   loadResource({
     resource: PLAY_LOAD_RESOURCE,
@@ -227,3 +227,4 @@ export function play(options = {}) {
     }
   }
 }
+window.play = play;

@@ -1,7 +1,7 @@
 
-const LOADING_RESOURCE = {
-  LoadingBg: 'images/loading/loadingBg.png',
-  LoadingBar: 'images/loading/loadingBar.png'
+export const LOADING_RESOURCE = {
+  LoadingBg: 'assets/images/loading/loadingBg.png',
+  LoadingBar: 'assets/images/loading/loadingBar.png'
 };
 
 /**
@@ -28,7 +28,8 @@ export default function loading(options) {
       bunny1, sprite, texture;
 
     if (loading.hasInit) loadComplete();
-    else loader.add('loadingBg', 'images/loading/loadingBg.png').add('loadingBar', 'images/loading/loadingBar.png').load(loadComplete);
+    else loader.add('loadingBg', LOADING_RESOURCE.LoadingBg).add('loadingBar', LOADING_RESOURCE.LoadingBar).load(loadComplete);
+    // else loader.add('loadingBg', 'assets/images/loading/loadingBg.png').add('loadingBar', 'assets/images/loading/loadingBar.png').load(loadComplete);
 
     app.stage.addChild(loadingStage);
 

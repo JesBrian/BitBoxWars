@@ -1,18 +1,16 @@
 
-import { play } from '../PlayView/index.js';
-
 /**
  * 需要加载的资源
  */
 export const ENTRY_LOAD_RESOURCE = {
-  Cover: 'images/Cover.png',
-  MapBtn: 'images/ui/entry/MapBtn.png',
-  MapIcon: 'images/ui/entry/MapIcon.png',
-  StartBtn: 'images/ui/entry/StartBtn.png',
-  PlayerBg: 'images/ui/entry/PlayerBg.png',
-  PlayerBtn: 'images/ui/entry/PlayerBtn.png',
-  StartArrow: 'images/ui/entry/StartArrow.png',
-  SingleArrow: 'images/ui/entry/SingleArrow.png',
+  Cover: 'assets/images/Cover.png',
+  MapBtn: 'assets/images/ui/entry/MapBtn.png',
+  MapIcon: 'assets/images/ui/entry/MapIcon.png',
+  StartBtn: 'assets/images/ui/entry/StartBtn.png',
+  PlayerBg: 'assets/images/ui/entry/PlayerBg.png',
+  PlayerBtn: 'assets/images/ui/entry/PlayerBtn.png',
+  StartArrow: 'assets/images/ui/entry/StartArrow.png',
+  SingleArrow: 'assets/images/ui/entry/SingleArrow.png',
 };
 
 /**
@@ -128,10 +126,18 @@ export function entry() {
       StartBtn.on('pointertap', () => {
         MapBtnTexture.frame = new PIXI.Rectangle(0, MapBtnOriginHeight / 10 * nowMapStep * 2, MapBtnTexture.width, MapBtnOriginHeight / 10);
 
-        play({
-          map: nowMapStep
+        const loadTask = wx.loadSubpackage({
+          name: 'PlayModule',
+          success: res => {
+            play({
+              map: nowMapStep
+            });
+            _changeStage();
+          },
+          fail: err => {
+            console.log(err);
+          }
         });
-        _changeStage();
       });
 
       StartArrow = PIXI.Sprite.from('StartArrow');
