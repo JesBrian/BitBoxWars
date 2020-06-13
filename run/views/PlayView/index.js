@@ -4,11 +4,13 @@
 export const PLAY_LOAD_RESOURCE = {
   Stripes: 'images/stripes.png',
   TopBar: 'images/ui/play/TopBar.png',
+  MenuBtn: 'images/ui/play/MenuBtn.png',
   ComboBar: 'images/ui/play/ComboBar.png',
   TouchBtn: 'images/ui/play/TouchBtn.png',
   TouchBar: 'images/ui/play/TouchBar.png',
   FireBtn: 'images/ui/play/FireBtn.png',
-  SwitchBtn: 'images/ui/play/SwitchBtn.png',
+  LeftSwitchBtn: 'images/ui/play/LeftSwitchBtn.png',
+  RightSwitchBtn: 'images/ui/play/RightSwitchBtn.png',
   StatusBar: 'images/ui/play/StatusBar.png',
   HeartIcon: 'images/icon/heart.png',
   Icon0: 'images/icon/0.png',
@@ -44,7 +46,7 @@ export function play(options = {}) {
 
   function renderPlay() {
     const playViewStage = new PIXI.Container();
-    let FireBtnTexture, FireBtnOriginWidth = 0;
+    let nowScore = '000', TopBar, FireBtnTexture, FireBtnOriginWidth = 0;
 
     app.stage.addChild(playViewStage);
     _statusContainer();
@@ -53,7 +55,7 @@ export function play(options = {}) {
     app.ticker.add(_eventLoop);
 
     function _statusContainer() {
-      let TopBar = PIXI.Sprite.from('TopBar');
+      TopBar = PIXI.Sprite.from('TopBar');
       TopBar.anchor.set(0.5, 0);
       TopBar.x = gameWidth / 2;
       TopBar.y = 0;
@@ -75,25 +77,66 @@ export function play(options = {}) {
       ComboBar.x = gameWidth;
       ComboBar.y = 105 + ComboBar.height / 2;
       // 数字
-      let num1 = new PIXI.Sprite.from('Icon0');
+      let num1 = PIXI.Sprite.from('Icon0');
       num1.anchor.set(1, 0.5);
       num1.x = gameWidth - 25;
       num1.y = ComboBar.y - 2;
       num1.height = num1.height * 1.3;
-      let num2 = new PIXI.Sprite.from('Icon0');
+      let num2 = PIXI.Sprite.from('Icon0');
       num2.anchor.set(1, 0.5);
       num2.x = num1.x - num1.width - 10;
       num2.y = ComboBar.y - 2;
       num2.height = num2.height * 1.3;
-      let num3 = new PIXI.Sprite.from('Icon0');
+      let num3 = PIXI.Sprite.from('Icon0');
       num3.anchor.set(1, 0.5);
       num3.x = num2.x - num2.width - 10;
       num3.y = ComboBar.y - 2;
       num3.height = num3.height * 1.3;
+
+      // TODO: 测试递增数字
+      setInterval(() => {
+        playViewStage.removeChild(num1, num2, num3);
+        const scoreArr = nowScore.split('');
+        num1 = PIXI.Sprite.from(`Icon${scoreArr[2]}`);
+        num1.anchor.set(1, 0.5);
+        num1.x = gameWidth - 25;
+        num1.y = ComboBar.y - 2;
+        num1.height = num1.height * 1.3;
+        num2 = PIXI.Sprite.from(`Icon${scoreArr[1]}`);
+        num2.anchor.set(1, 0.5);
+        num2.x = num1.x - num1.width - 10;
+        num2.y = ComboBar.y - 2;
+        num2.height = num2.height * 1.3;
+        num3 = PIXI.Sprite.from(`Icon${scoreArr[0]}`);
+        num3.anchor.set(1, 0.5);
+        num3.x = num2.x - num2.width - 10;
+        num3.y = ComboBar.y - 2;
+        num3.height = num3.height * 1.3;
+        nowScore = `000${nowScore * 1 + 1}`.slice(-3);
+        playViewStage.addChild(num1, num2, num3);
+      }, 3000);
+
       playViewStage.addChild(TopBar, spriteFrame, HeartIcon, spriteFrame2, ComboBar, num1, num2, num3);
     }
 
     function _controllerContainer() {
+      let MenuBtnTexture = PIXI.utils.TextureCache['MenuBtn'], MenuBtnOriginWidth = MenuBtnTexture.width;
+      MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 1, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
+      let MenuBtn = new PIXI.Sprite.from(MenuBtnTexture);
+      MenuBtn.x = TopBar.x + TopBar.width / 2;
+      MenuBtn.y = 0;
+      MenuBtn.anchor.set(0.5, 0);
+      MenuBtn.buttonMode = true;
+      MenuBtn.interactive = true;
+      MenuBtn.on('pointertap', () => {
+        MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 0, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
+
+        // TODO: 去抖 && 节流
+        setTimeout(() => {
+          MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 1, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
+        }, 1000);
+      });
+
       let TouchBar = PIXI.Sprite.from('TouchBar');
       TouchBar.width = 228;
       TouchBar.height = 228;
@@ -107,6 +150,28 @@ export function play(options = {}) {
       TouchBtn.x = TouchBar.x;
       TouchBtn.y = TouchBar.y;
       TouchBtn.anchor.set(0.5, 0.5);
+      TouchBtn.buttonMode = true;
+      TouchBtn.interactive = true;
+      TouchBtn.on('mousedown', onDragStart)
+      .on('touchstart', onDragStart)
+      .on('mouseup', onDragEnd)
+      .on('mouseupoutside', onDragEnd)
+      .on('touchend', onDragEnd)
+      .on('touchendoutside', onDragEnd)
+      .on('mousemove', onDragMove)
+      .on('touchmove', onDragMove);
+
+      function onDragStart(event) {
+        console.log('onDragStart', event);
+      }
+
+      function onDragEnd() {
+        console.log('onDragEnd');
+      }
+
+      function onDragMove() {
+        console.log('onDragMove');
+      }
 
       FireBtnTexture = PIXI.utils.TextureCache['FireBtn'];
       FireBtnOriginWidth = FireBtnTexture.width;
@@ -114,8 +179,8 @@ export function play(options = {}) {
       let FireBtn = new PIXI.Sprite(FireBtnTexture);
       FireBtn.width = 128;
       FireBtn.height = 128;
-      FireBtn.x = gameWidth - FireBtn.width - 68;
-      FireBtn.y = TouchBar.y + 18;
+      FireBtn.x = gameWidth - FireBtn.width - 75;
+      FireBtn.y = TouchBar.y - 8;
       FireBtn.rotation = -Math.PI / 4;
       FireBtn.anchor.set(0.5, 0.5);
       FireBtn.buttonMode = true;
@@ -129,21 +194,21 @@ export function play(options = {}) {
         }, 1000);
       });
 
-      let LeftSwitchBtn = new PIXI.Sprite.from('SwitchBtn');
+      let LeftSwitchBtn = new PIXI.Sprite.from('LeftSwitchBtn');
       LeftSwitchBtn.anchor.set(0.5, 0.5);
       LeftSwitchBtn.width = 88;
       LeftSwitchBtn.height = 88;
       LeftSwitchBtn.x = FireBtn.x - FireBtn.width / 4 * 2.5;
       LeftSwitchBtn.y = FireBtn.y + FireBtn.height / 4 * 2.5;
-      let RightSwitchBtn = new PIXI.Sprite.from('SwitchBtn');
+      let RightSwitchBtn = new PIXI.Sprite.from('RightSwitchBtn');
       RightSwitchBtn.anchor.set(0.5, 0.5);
       RightSwitchBtn.width = 88;
       RightSwitchBtn.height = 88;
       RightSwitchBtn.x = FireBtn.x + FireBtn.width / 4 * 2.5;
       RightSwitchBtn.y = FireBtn.y - FireBtn.height / 4 * 2.5;
-      RightSwitchBtn.rotation = Math.PI;
+      // RightSwitchBtn.rotation = Math.PI;
 
-      playViewStage.addChild(TouchBar, TouchBtn, FireBtn, LeftSwitchBtn, RightSwitchBtn);
+      playViewStage.addChild(MenuBtn, TouchBar, TouchBtn, FireBtn, LeftSwitchBtn, RightSwitchBtn);
     }
 
     function _playContainer() {

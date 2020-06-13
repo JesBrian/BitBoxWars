@@ -11,7 +11,7 @@ export default function main() {
     view: canvas,
     width: gameWidth,
     height: gameHeight,
-    backgroundColor: 0xFFFFFF,
+    backgroundColor: 0x333333,
     forceFXAA: true
   });
   app.renderer.plugins.interaction.mapPositionToPoint = (point, x, y) => {
