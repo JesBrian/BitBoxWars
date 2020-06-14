@@ -120,7 +120,7 @@ export function play(options = {}) {
     }
 
     function _controllerContainer() {
-      let MenuBtnTexture = PIXI.utils.TextureCache['MenuBtn'], MenuBtnOriginWidth = MenuBtnTexture.width;
+      let MenuBtnTexture = PIXI.utils.TextureCache['MenuBtn'], MenuBtnOriginWidth = MenuBtnTexture.width * 3;
       MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 1, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
       let MenuBtn = new PIXI.Sprite.from(MenuBtnTexture);
       MenuBtn.x = TopBar.x + TopBar.width / 2;
