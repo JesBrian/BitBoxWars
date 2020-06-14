@@ -4,7 +4,7 @@ import { loadSubModule } from '../../../utils/functions.js';
 /**
  * 需要加载的资源
  */
-export const ENTRY_LOAD_RESOURCE = {
+const ENTRY_LOAD_RESOURCE = {
   Cover: 'assets/images/Cover.png',
   MenuBtn: 'assets/images/icon/menu.png',
   MapBtn: 'assets/images/ui/entry/MapBtn.png',
@@ -19,7 +19,7 @@ export const ENTRY_LOAD_RESOURCE = {
 /**
  * 游戏开始入口
  */
-export function entry() {
+export default function entry() {
   loadResource({
     resource: ENTRY_LOAD_RESOURCE,
     showProcess: false

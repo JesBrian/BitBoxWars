@@ -1,5 +1,5 @@
 import loading from './components/Loading/index.js';
-import { entry } from './views/EntryView/index.js';
+import entry  from './views/EntryView/index.js';
 
 /**
  * 游戏主入口

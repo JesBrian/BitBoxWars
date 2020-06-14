@@ -1,7 +1,7 @@
 /**
  * 需要加载的资源
  */
-export const PLAY_LOAD_RESOURCE = {
+const PLAY_LOAD_RESOURCE = {
   // Stripes: 'modules/PlayModule/resources/images/stripes.png',
   TopBar: 'modules/PlayModule/resources/images/TopBar.png',
   ComboBar: 'modules/PlayModule/resources/images/ComboBar.png',
@@ -28,7 +28,7 @@ export const PLAY_LOAD_RESOURCE = {
 /**
  * 游戏游玩入口
  */
-export function play(options = {}) {
+export default function play(options = {}) {
   const playOptions = {
     map: 0,
     player: 1,

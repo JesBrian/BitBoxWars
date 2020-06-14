@@ -4,6 +4,7 @@
 node_modules
 *.log
 package-lock.json
+yarn.lock
 explorations
 TODOs.md
 test/e2e/reports

@@ -1,13 +1,13 @@
 
-export const LOADING_RESOURCE = {
+const LOADING_RESOURCE = {
   LoadingBg: 'assets/images/loading/loadingBg.png',
   LoadingBar: 'assets/images/loading/loadingBar.png'
 };
 
 /**
  * 通用加载资源组件
- * @param resource
- * @returns {Promise}
+ * @param options
+ * @returns {Promise|Promise|Promise|Promise}
  */
 export default function loading(options) {
   let loadOptions = {
@@ -17,7 +17,7 @@ export default function loading(options) {
   };
   Object.assign(loadOptions, options);
 
-  let loader = app.loader, {
+  let loader = PIXI.Loader.shared, {
     resource, showProcess, position
   } = loadOptions;
 
@@ -29,7 +29,6 @@ export default function loading(options) {
 
     if (loading.hasInit) loadComplete();
     else loader.add('loadingBg', LOADING_RESOURCE.LoadingBg).add('loadingBar', LOADING_RESOURCE.LoadingBar).load(loadComplete);
-    // else loader.add('loadingBg', 'assets/images/loading/loadingBg.png').add('loadingBar', 'assets/images/loading/loadingBar.png').load(loadComplete);
 
     app.stage.addChild(loadingStage);
 
