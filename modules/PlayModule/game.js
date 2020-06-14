@@ -4,6 +4,8 @@
 const PLAY_LOAD_RESOURCE = {
   // Stripes: 'modules/PlayModule/resources/images/stripes.png',
   TopBar: 'modules/PlayModule/resources/images/TopBar.png',
+  ChargeBar: 'modules/PlayModule/resources/images/ChargeBar.png',
+  FullCharge: 'modules/PlayModule/resources/images/FullCharge.png',
   ComboBar: 'modules/PlayModule/resources/images/ComboBar.png',
   TouchBtn: 'modules/PlayModule/resources/images/TouchBtn.png',
   TouchBar: 'modules/PlayModule/resources/images/TouchBar.png',
@@ -61,6 +63,21 @@ export default function play(options = {}) {
       TopBar.y = 0;
       TopBar.width = TopBar.width * 1.38;
       TopBar.height = TopBar.height * 1.38;
+
+      let ChargeBar = PIXI.Sprite.from('ChargeBar');
+      ChargeBar.anchor.set(0.5, 0);
+      ChargeBar.x = gameWidth / 2;
+      ChargeBar.y = TopBar.height * 0.145;
+      ChargeBar.width = ChargeBar.width * 1.38;
+      ChargeBar.height = ChargeBar.height * 1.38;
+
+      let FullCharge = PIXI.Sprite.from('FullCharge');
+      FullCharge.anchor.set(0.5, 0);
+      FullCharge.x = gameWidth / 2 + TopBar.width / 2 * 0.4425;
+      FullCharge.y = TopBar.height * 0.185;
+      FullCharge.width = FullCharge.width * 1.38;
+      FullCharge.height = FullCharge.height * 1.38;
+
       let spriteFrame = new PIXI.Sprite.from('StatusBar');
       spriteFrame.x = 38;
       spriteFrame.y = 20;
@@ -116,7 +133,7 @@ export default function play(options = {}) {
         playViewStage.addChild(num1, num2, num3);
       }, 3000);
 
-      playViewStage.addChild(TopBar, spriteFrame, HeartIcon, spriteFrame2, ComboBar, num1, num2, num3);
+      playViewStage.addChild(TopBar, ChargeBar, FullCharge, spriteFrame, HeartIcon, spriteFrame2, ComboBar, num1, num2, num3);
     }
 
     function _controllerContainer() {

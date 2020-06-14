@@ -40,7 +40,7 @@ export default function entry() {
     const MapIconTexture = PIXI.utils.TextureCache['MapIcon'], MapIconOriginWidth = MapIconTexture.width,
       MapBtnTexture = PIXI.utils.TextureCache['MapBtn'], MapBtnOriginHeight = MapBtnTexture.height;
     let nowMapStep = 0, loopStep = 0,
-      MapBtn, MapLeftArrowBtn, MapRightArrowBtn,
+      MapIcon, MapBtn, MapLeftArrowBtn, MapRightArrowBtn,
       PlayerBg, PlayerBtn,
       StartBtn, StartArrow;
 
@@ -53,10 +53,11 @@ export default function entry() {
     // 地图
     function _renderMap() {
       MapIconTexture.frame = new PIXI.Rectangle(MapIconOriginWidth / 5 * nowMapStep, 0, MapIconOriginWidth / 5, MapIconTexture.height);
-      let MapIcon = new PIXI.Sprite(MapIconTexture);
+      MapIcon = new PIXI.Sprite(MapIconTexture);
       MapIcon.anchor.set(0.5, 0.5);
       MapIcon.x = gameWidth * 0.25;
       MapIcon.y = gameHeight * 0.35;
+      MapIcon.direction = false;
 
       MapBtnTexture.frame = new PIXI.Rectangle(0, MapBtnOriginHeight / 10 * (nowMapStep * 2 + 1), MapBtnTexture.width, MapBtnOriginHeight / 10);
       MapBtn = new PIXI.Sprite(MapBtnTexture);
@@ -139,7 +140,9 @@ export default function entry() {
         }, 1000);
       });
 
-      StartBtn = PIXI.Sprite.from('StartBtn');
+      let StartBtnTexture = PIXI.utils.TextureCache['StartBtn'], StartBtnOriginHeight = StartBtnTexture.height;
+      StartBtnTexture.frame = new PIXI.Rectangle(0, 0, StartBtnTexture.width, StartBtnOriginHeight / 2);
+      StartBtn = new PIXI.Sprite.from(StartBtnTexture);
       StartBtn.anchor.set(0.5, 0.5);
       StartBtn.x = PlayerBg.x;
       StartBtn.y = gameHeight * 0.85;
@@ -147,6 +150,7 @@ export default function entry() {
       StartBtn.interactive = true;
       StartBtn.on('pointertap', () => {
         MapBtnTexture.frame = new PIXI.Rectangle(0, MapBtnOriginHeight / 10 * nowMapStep * 2, MapBtnTexture.width, MapBtnOriginHeight / 10);
+        StartBtnTexture.frame = new PIXI.Rectangle(0, StartBtnOriginHeight / 2, StartBtnTexture.width, StartBtnOriginHeight / 2);
 
         loadSubModule('Play').then(res => {
           play({
@@ -165,6 +169,15 @@ export default function entry() {
     }
 
     function _eventLoop() {
+      // 地图图标
+      if (MapIcon.direction) {
+        MapIcon.y += 0.38;
+        if (gameHeight * 0.35 + 10 < MapIcon.y) MapIcon.direction = false;
+      } else {
+        MapIcon.y -= 0.38;
+        if (gameHeight * 0.35 - 10 > MapIcon.y) MapIcon.direction = true;
+      }
+
       if (StartArrow.x < StartBtn.x - StartBtn.width / 2 - 38) {
         StartArrow.x += 0.88;
         MapLeftArrowBtn.x -= 1;
