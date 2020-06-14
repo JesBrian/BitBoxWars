@@ -1,4 +1,5 @@
-window.WebGLRenderingContext = true;
-import './manifest';
-import App from './main/main.js';
+
+import './core/manifest';
+import App from './app/app.js';
+
 App();

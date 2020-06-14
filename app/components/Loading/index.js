@@ -1,7 +1,7 @@
 
 const LOADING_RESOURCE = {
-  LoadingBg: 'assets/images/loading/loadingBg.png',
-  LoadingBar: 'assets/images/loading/loadingBar.png'
+  LoadingBg: 'static/images/loading/loadingBg.png',
+  LoadingBar: 'static/images/loading/loadingBar.png'
 };
 
 /**

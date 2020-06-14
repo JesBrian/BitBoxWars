@@ -1,20 +1,7 @@
 {
-	"description": "项目配置文件。",
+	"description": "项目配置文件",
 	"packOptions": {
-		"ignore": [
-			{
-				"type": "folder",
-				"value": "res"
-			},
-			{
-				"type": "folder",
-				"value": "web"
-			},
-			{
-				"type": "folder",
-				"value": "cloud"
-			}
-		]
+		"ignore": []
 	},
 	"setting": {
 		"urlCheck": false,
@@ -23,8 +10,8 @@
 		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
-		"coverView": true,
 		"autoAudits": false,
+		"coverView": true,
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false,
 		"uglifyFileName": true,
@@ -42,12 +29,18 @@
 	"compileType": "game",
 	"libVersion": "2.8.3",
 	"appid": "wxce30907b2def739e",
-	"projectname": "ivank",
-	"isGameTourist": false,
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
+	"projectname": "BitBoxWars",
 	"cloudfunctionRoot": "cloud/",
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+	"watchOptions": {
+		"ignore": []
+	},
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"scripts": {},
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -57,8 +50,15 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
-			"currentL": -1,
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
 			"list": []
 		},
 		"miniprogram": {

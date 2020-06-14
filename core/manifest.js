@@ -1,8 +1,10 @@
-import './libs/weapp-adapter';
-import './libs/pixi.min.js';
-import './libs/unsafe-eval.min';
+import '../libs/weapp-adapter.js';
+import '../libs/pixi.min.js';
+import '../libs/unsafe-eval.min.js';
+import { DOMParser } from '../libs/xmldom/xmldom.js';
 
-window.DOMParser = require('./libs/xmldom/xmldom.js').DOMParser;
+window.DOMParser = DOMParser;
+window.WebGLRenderingContext = {};
 window.windowWidth = window.innerWidth;
 window.windowHeight = window.innerHeight;
 window.gameWidth = Math.ceil(750 * windowWidth / innerHeight);

@@ -5,15 +5,15 @@ import { loadSubModule } from '../../../utils/functions.js';
  * 需要加载的资源
  */
 const ENTRY_LOAD_RESOURCE = {
-  Cover: 'assets/images/Cover.png',
-  MenuBtn: 'assets/images/icon/menu.png',
-  MapBtn: 'assets/images/ui/entry/MapBtn.png',
-  MapIcon: 'assets/images/ui/entry/MapIcon.png',
-  StartBtn: 'assets/images/ui/entry/StartBtn.png',
-  PlayerBg: 'assets/images/ui/entry/PlayerBg.png',
-  PlayerBtn: 'assets/images/ui/entry/PlayerBtn.png',
-  StartArrow: 'assets/images/ui/entry/StartArrow.png',
-  SingleArrow: 'assets/images/ui/entry/SingleArrow.png',
+  Cover: 'static/images/Cover.png',
+  MenuBtn: 'static/images/icon/menu.png',
+  MapBtn: 'static/images/ui/entry/MapBtn.png',
+  MapIcon: 'static/images/ui/entry/MapIcon.png',
+  StartBtn: 'static/images/ui/entry/StartBtn.png',
+  PlayerBg: 'static/images/ui/entry/PlayerBg.png',
+  PlayerBtn: 'static/images/ui/entry/PlayerBtn.png',
+  StartArrow: 'static/images/ui/entry/StartArrow.png',
+  SingleArrow: 'static/images/ui/entry/SingleArrow.png',
 };
 
 /**
