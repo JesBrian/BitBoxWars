@@ -5,6 +5,7 @@ const PLAY_LOAD_RESOURCE = {
   // Stripes: 'modules/PlayModule/resources/images/stripes.png',
   TopBar: 'modules/PlayModule/resources/images/TopBar.png',
   ChargeBar: 'modules/PlayModule/resources/images/ChargeBar.png',
+  EmptyCharge: 'modules/PlayModule/resources/images/EmptyCharge.png',
   FullCharge: 'modules/PlayModule/resources/images/FullCharge.png',
   ComboBar: 'modules/PlayModule/resources/images/ComboBar.png',
   TouchBtn: 'modules/PlayModule/resources/images/TouchBtn.png',
@@ -67,16 +68,23 @@ export default function play(options = {}) {
       let ChargeBar = PIXI.Sprite.from('ChargeBar');
       ChargeBar.anchor.set(0.5, 0);
       ChargeBar.x = gameWidth / 2;
-      ChargeBar.y = TopBar.height * 0.145;
+      ChargeBar.y = TopBar.height * 0.195;
       ChargeBar.width = ChargeBar.width * 1.38;
-      ChargeBar.height = ChargeBar.height * 1.38;
+      ChargeBar.height = ChargeBar.height * 1.2;
+
+      let EmptyCharge = PIXI.Sprite.from('EmptyCharge');
+      EmptyCharge.anchor.set(0.5, 0);
+      EmptyCharge.x = gameWidth / 2 - TopBar.width / 2 * 0.448;
+      EmptyCharge.y = TopBar.height * 0.18;
+      EmptyCharge.width = EmptyCharge.width * 1.18;
+      EmptyCharge.height = EmptyCharge.height * 1.18;
 
       let FullCharge = PIXI.Sprite.from('FullCharge');
       FullCharge.anchor.set(0.5, 0);
-      FullCharge.x = gameWidth / 2 + TopBar.width / 2 * 0.4425;
-      FullCharge.y = TopBar.height * 0.185;
-      FullCharge.width = FullCharge.width * 1.38;
-      FullCharge.height = FullCharge.height * 1.38;
+      FullCharge.x = gameWidth / 2 + TopBar.width / 2 * 0.455;
+      FullCharge.y = TopBar.height * 0.08;
+      FullCharge.width = FullCharge.width * 2.25;
+      FullCharge.height = FullCharge.height * 2;
 
       let spriteFrame = new PIXI.Sprite.from('StatusBar');
       spriteFrame.x = 38;
@@ -133,7 +141,7 @@ export default function play(options = {}) {
         playViewStage.addChild(num1, num2, num3);
       }, 3000);
 
-      playViewStage.addChild(TopBar, ChargeBar, FullCharge, spriteFrame, HeartIcon, spriteFrame2, ComboBar, num1, num2, num3);
+      playViewStage.addChild(TopBar, ChargeBar, EmptyCharge, FullCharge, spriteFrame, HeartIcon, spriteFrame2, ComboBar, num1, num2, num3);
     }
 
     function _controllerContainer() {
