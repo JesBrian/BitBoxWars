@@ -108,23 +108,6 @@ export default function play(options = {}) {
       let num1, num2, num3;
       _renderComboNum();
 
-      setInterval(() => {
-        if (ChargeBar.width + 1.8 > ChargeBarOriginWidth) {
-          ChargeBarTexture.frame = new PIXI.Rectangle(0, 0, 0, ChargeBarTexture.height);
-          nowScore = `000${nowScore * 1 - 1}`.slice(-3);
-          _renderComboNum();
-        } else {
-          ChargeBarTexture.frame = new PIXI.Rectangle(0, 0, ChargeBarTexture.width + 1.8, ChargeBarTexture.height);
-        }
-        ChargeBar.width = ChargeBarTexture.width * 1.38;
-      }, 38);
-
-      // TODO: 测试递增数字
-      setInterval(() => {
-        nowScore = `000${nowScore * 1 + 1}`.slice(-3);
-        _renderComboNum();
-      }, 2500);
-
       function _renderComboNum() {
         playViewStage.removeChild(num1, num2, num3);
         const scoreArr = nowScore.split('');
@@ -151,6 +134,27 @@ export default function play(options = {}) {
       }
 
       playViewStage.addChild(TopBar, ChargeBar, EmptyCharge, FullCharge, spriteFrame, HeartIcon, spriteFrame2, ComboBar, num1, num2, num3);
+
+      _statusContainer.comboNumEventLoop = (detail) => {
+        if (typeof _statusContainer.comboNumEventLoop.coutTime === 'undefined') _statusContainer.comboNumEventLoop.coutTime = 0;
+        _statusContainer.comboNumEventLoop.coutTime += detail;
+        if (_statusContainer.comboNumEventLoop.coutTime >= 150) {
+          _statusContainer.comboNumEventLoop.coutTime = 0;
+          nowScore = `000${nowScore * 1 + 1}`.slice(-3);
+          _renderComboNum();
+        }
+      }
+
+      _statusContainer.chargeBarEventLoop = (detail) => {
+        if (ChargeBar.width + 1.8 > ChargeBarOriginWidth) {
+          ChargeBarTexture.frame = new PIXI.Rectangle(0, 0, 0, ChargeBarTexture.height);
+          nowScore = `000${nowScore * 1 - 1}`.slice(-3);
+          _renderComboNum();
+        } else {
+          ChargeBarTexture.frame = new PIXI.Rectangle(0, 0, ChargeBarTexture.width + 0.8, ChargeBarTexture.height);
+        }
+        ChargeBar.width = ChargeBarTexture.width * 1.38;
+      }
     }
 
     function _controllerContainer() {
@@ -168,7 +172,9 @@ export default function play(options = {}) {
         // TODO: 去抖 && 节流
         setTimeout(() => {
           MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 1, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
-        }, 1000);
+          app.ticker.add(_eventLoop);
+        }, 2500);
+        app.ticker.remove(_eventLoop);
       });
 
       let TouchBar = PIXI.Sprite.from('TouchBar');
@@ -177,6 +183,12 @@ export default function play(options = {}) {
       TouchBar.x = TouchBar.width + 38;
       TouchBar.y = gameHeight - TouchBar.height / 2 - 68;
       TouchBar.anchor.set(0.5, 0.5);
+      TouchBar.buttonMode = true;
+      TouchBar.interactive = true;
+      TouchBar.on('touchstart', onDragStart)
+      .on('touchend', onDragEnd)
+      .on('touchendoutside', onDragEnd)
+      .on('touchmove', onDragMove);
 
       let TouchBtn = PIXI.Sprite.from('TouchBtn');
       TouchBtn.width = 88;
@@ -184,27 +196,23 @@ export default function play(options = {}) {
       TouchBtn.x = TouchBar.x;
       TouchBtn.y = TouchBar.y;
       TouchBtn.anchor.set(0.5, 0.5);
-      TouchBtn.buttonMode = true;
-      TouchBtn.interactive = true;
-      TouchBtn.on('mousedown', onDragStart)
-      .on('touchstart', onDragStart)
-      .on('mouseup', onDragEnd)
-      .on('mouseupoutside', onDragEnd)
-      .on('touchend', onDragEnd)
-      .on('touchendoutside', onDragEnd)
-      .on('mousemove', onDragMove)
-      .on('touchmove', onDragMove);
 
       function onDragStart(event) {
-        console.log('onDragStart', event);
+        this.data = event.data;
+        this.dragging = true;
       }
 
-      function onDragEnd() {
-        console.log('onDragEnd');
+      function onDragEnd(event) {
+        this.dragging = false;
+        this.data = null;
       }
 
-      function onDragMove() {
-        console.log('onDragMove');
+      function onDragMove(event) {
+        if (this.dragging) {
+          const {x, y} = this.data.getLocalPosition(this.parent);
+          TouchBtn.x = x;
+          TouchBtn.y = y;
+        }
       }
 
       FireBtnTexture = PIXI.utils.TextureCache['FireBtn'];
@@ -258,6 +266,8 @@ export default function play(options = {}) {
     }
 
     function _eventLoop(detail) {
+      _statusContainer.comboNumEventLoop(detail);
+      _statusContainer.chargeBarEventLoop(detail);
     }
   }
 }
