@@ -65,11 +65,13 @@ export default function play(options = {}) {
       TopBar.width = TopBar.width * 1.38;
       TopBar.height = TopBar.height * 1.38;
 
-      let ChargeBar = PIXI.Sprite.from('ChargeBar');
-      ChargeBar.anchor.set(0.5, 0);
-      ChargeBar.x = gameWidth / 2;
+      let ChargeBarTexture = PIXI.utils.TextureCache['ChargeBar'], ChargeBarOriginWidth = ChargeBarTexture.width * 1.38;
+      ChargeBarTexture.frame = new PIXI.Rectangle(0, 0, 0, ChargeBarTexture.height);
+      let ChargeBar = new PIXI.Sprite.from(ChargeBarTexture);
+      ChargeBar.anchor.set(0, 0);
+      ChargeBar.x = gameWidth / 2 - ChargeBarOriginWidth / 2;
       ChargeBar.y = TopBar.height * 0.195;
-      ChargeBar.width = ChargeBar.width * 1.38;
+      ChargeBar.width = ChargeBarTexture.width * 1.38;
       ChargeBar.height = ChargeBar.height * 1.2;
 
       let EmptyCharge = PIXI.Sprite.from('EmptyCharge');
@@ -101,45 +103,52 @@ export default function play(options = {}) {
       ComboBar.anchor.set(1, 0.5);
       ComboBar.x = gameWidth;
       ComboBar.y = 105 + ComboBar.height / 2;
+
       // 数字
-      let num1 = PIXI.Sprite.from('Icon0');
-      num1.anchor.set(1, 0.5);
-      num1.x = gameWidth - 25;
-      num1.y = ComboBar.y - 2;
-      num1.height = num1.height * 1.3;
-      let num2 = PIXI.Sprite.from('Icon0');
-      num2.anchor.set(1, 0.5);
-      num2.x = num1.x - num1.width - 10;
-      num2.y = ComboBar.y - 2;
-      num2.height = num2.height * 1.3;
-      let num3 = PIXI.Sprite.from('Icon0');
-      num3.anchor.set(1, 0.5);
-      num3.x = num2.x - num2.width - 10;
-      num3.y = ComboBar.y - 2;
-      num3.height = num3.height * 1.3;
+      let num1, num2, num3;
+      _renderComboNum();
+
+      setInterval(() => {
+        if (ChargeBar.width + 1.8 > ChargeBarOriginWidth) {
+          ChargeBarTexture.frame = new PIXI.Rectangle(0, 0, 0, ChargeBarTexture.height);
+          nowScore = `000${nowScore * 1 - 1}`.slice(-3);
+          _renderComboNum();
+        } else {
+          ChargeBarTexture.frame = new PIXI.Rectangle(0, 0, ChargeBarTexture.width + 1.8, ChargeBarTexture.height);
+        }
+        ChargeBar.width = ChargeBarTexture.width * 1.38;
+      }, 38);
 
       // TODO: 测试递增数字
       setInterval(() => {
+        nowScore = `000${nowScore * 1 + 1}`.slice(-3);
+        _renderComboNum();
+      }, 2500);
+
+      function _renderComboNum() {
         playViewStage.removeChild(num1, num2, num3);
         const scoreArr = nowScore.split('');
+
         num1 = PIXI.Sprite.from(`Icon${scoreArr[2]}`);
         num1.anchor.set(1, 0.5);
         num1.x = gameWidth - 25;
         num1.y = ComboBar.y - 2;
         num1.height = num1.height * 1.3;
+
         num2 = PIXI.Sprite.from(`Icon${scoreArr[1]}`);
         num2.anchor.set(1, 0.5);
         num2.x = num1.x - num1.width - 10;
         num2.y = ComboBar.y - 2;
         num2.height = num2.height * 1.3;
+
         num3 = PIXI.Sprite.from(`Icon${scoreArr[0]}`);
         num3.anchor.set(1, 0.5);
         num3.x = num2.x - num2.width - 10;
         num3.y = ComboBar.y - 2;
         num3.height = num3.height * 1.3;
-        nowScore = `000${nowScore * 1 + 1}`.slice(-3);
+
         playViewStage.addChild(num1, num2, num3);
-      }, 3000);
+      }
 
       playViewStage.addChild(TopBar, ChargeBar, EmptyCharge, FullCharge, spriteFrame, HeartIcon, spriteFrame2, ComboBar, num1, num2, num3);
     }
