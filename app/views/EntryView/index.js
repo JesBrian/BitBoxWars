@@ -1,6 +1,4 @@
 
-import { loadSubModule } from '../../../utils/functions.js';
-
 /**
  * 需要加载的资源
  */
@@ -152,7 +150,7 @@ export default function entry() {
         MapBtnTexture.frame = new PIXI.Rectangle(0, MapBtnOriginHeight / 10 * nowMapStep * 2, MapBtnTexture.width, MapBtnOriginHeight / 10);
         StartBtnTexture.frame = new PIXI.Rectangle(0, StartBtnOriginHeight / 2, StartBtnTexture.width, StartBtnOriginHeight / 2);
 
-        loadSubModule('Play').then(res => {
+        Utils.loadSubModule('Play').then(res => {
           play({
             map: nowMapStep
           });

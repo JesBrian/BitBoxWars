@@ -1,3 +1,6 @@
+
+const noop = () => {};
+
 function debounceOrThrottle({fn, wait = 300, immediate = false, executeOncePerWait = false}) {
   if (typeof fn !== 'function') {
     throw new Error('fn is expected to be a function')
@@ -78,6 +81,6 @@ const loadSubModule = (moduleName = '') => {
   });
 }
 
-export {
-  debounce, throttle, loadSubModule
+export default {
+  noop, debounce, throttle, loadSubModule
 };

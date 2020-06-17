@@ -3,6 +3,9 @@ import '../libs/pixi.min.js';
 import '../libs/unsafe-eval.min.js';
 import { DOMParser } from '../libs/xmldom/xmldom.js';
 
+import Utils from '../utils/functions.js';
+
+window.Utils = Utils;
 window.DOMParser = DOMParser;
 window.WebGLRenderingContext = {};
 window.windowWidth = window.innerWidth;
