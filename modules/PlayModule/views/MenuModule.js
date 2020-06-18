@@ -15,25 +15,21 @@ export default function MenuModule(options) {
   Object.assign(menuOptions, options);
 
   function _init() {
-    menuStage = new PIXI.Container();
-    menuStage.width = gameWidth;
-    menuStage.height = gameHeight;
-    menuStage.zIndex = 100;
     menuOptions.initCallBack && menuOptions.initCallBack();
+    menuStage = new PIXI.Container();
     _render();
   }
 
   function _render() {
     app.stage.addChild(menuStage);
+    menuStage.width = gameWidth;
+    menuStage.height = gameHeight;
     menuOptions.renderCallBack && menuOptions.renderCallBack();
   }
 
   function _destroy() {
     app.stage.removeChild(menuStage);
     menuOptions.destroyCallBack && menuOptions.destroyCallBack();
-    // return new Promise((resolve, reject) => {
-    //   resolve();
-    // });
   }
 
   MenuModule.init = _init;

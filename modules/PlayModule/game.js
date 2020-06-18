@@ -51,13 +51,16 @@ export default function play(options = {}) {
 
   function renderPlay() {
     const playViewStage = new PIXI.Container();
-    let nowScore = '000', TopBar, FireBtnTexture, FireBtnOriginWidth = 0;
+    let nowScore = '000',
+      TopBar, MenuBtn, TouchBar,
+      FireBtn, FireBtnTexture, FireBtnOriginWidth = 0;
 
     app.stage.addChild(playViewStage);
     _statusContainer();
     _controllerContainer();
     _playContainer();
-    app.ticker.add(_eventLoop);
+    _bindEvent();
+    app.ticker.add(_renderLoop);
 
     function _statusContainer() {
       TopBar = PIXI.Sprite.from('TopBar');
@@ -135,6 +138,30 @@ export default function play(options = {}) {
         playViewStage.addChild(num1, num2, num3);
       }
 
+      let MenuBtnTexture = PIXI.utils.TextureCache['MenuBtn'], MenuBtnOriginWidth = MenuBtnTexture.width * 3;
+      MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 1, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
+      MenuBtn = new PIXI.Sprite.from(MenuBtnTexture);
+      MenuBtn.x = TopBar.x + TopBar.width / 2;
+      MenuBtn.y = 0;
+      MenuBtn.anchor.set(0.5, 0);
+      MenuBtn.buttonMode = true;
+      MenuBtn.on('pointertap', () => {
+        MenuModule({
+          initCallBack: () => {
+            MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 0, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
+            app.ticker.remove(_renderLoop);
+            _unbindEvent();
+          },
+          destroyCallBack: () => {
+            MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 1, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
+            app.ticker.add(_renderLoop);
+            _bindEvent();
+          }
+        });
+        MenuModule.init();
+      });
+
+
       playViewStage.addChild(TopBar, ChargeBar, EmptyCharge, FullCharge, spriteFrame, HeartIcon, spriteFrame2, ComboBar, num1, num2, num3);
 
       _statusContainer.comboNumEventLoop = (detail) => {
@@ -160,36 +187,13 @@ export default function play(options = {}) {
     }
 
     function _controllerContainer() {
-      let MenuBtnTexture = PIXI.utils.TextureCache['MenuBtn'], MenuBtnOriginWidth = MenuBtnTexture.width * 3;
-      MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 1, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
-      let MenuBtn = new PIXI.Sprite.from(MenuBtnTexture);
-      MenuBtn.x = TopBar.x + TopBar.width / 2;
-      MenuBtn.y = 0;
-      MenuBtn.anchor.set(0.5, 0);
-      MenuBtn.buttonMode = true;
-      MenuBtn.interactive = true;
-      MenuBtn.on('pointertap', () => {
-        MenuModule({
-          initCallBack: () => {
-            MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 0, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
-            app.ticker.remove(_eventLoop);
-          },
-          destroyCallBack: () => {
-            MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 1, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
-            app.ticker.add(_eventLoop);
-          }
-        });
-        MenuModule.init();
-      });
-
-      let TouchBar = PIXI.Sprite.from('TouchBar');
+      TouchBar = PIXI.Sprite.from('TouchBar');
       TouchBar.width = 228;
       TouchBar.height = 228;
       TouchBar.x = TouchBar.width + 38;
       TouchBar.y = gameHeight - TouchBar.height / 2 - 68;
       TouchBar.anchor.set(0.5, 0.5);
       TouchBar.buttonMode = true;
-      TouchBar.interactive = true;
       TouchBar.on('touchstart', onDragStart)
       .on('touchend', onDragEnd)
       .on('touchendoutside', onDragEnd)
@@ -223,7 +227,7 @@ export default function play(options = {}) {
       FireBtnTexture = PIXI.utils.TextureCache['FireBtn'];
       FireBtnOriginWidth = FireBtnTexture.width;
       FireBtnTexture.frame = new PIXI.Rectangle(0, 0, FireBtnOriginWidth / 2, FireBtnTexture.height);
-      let FireBtn = new PIXI.Sprite(FireBtnTexture);
+      FireBtn = new PIXI.Sprite(FireBtnTexture);
       FireBtn.width = 128;
       FireBtn.height = 128;
       FireBtn.x = gameWidth - FireBtn.width - 75;
@@ -231,7 +235,6 @@ export default function play(options = {}) {
       FireBtn.rotation = -Math.PI / 4;
       FireBtn.anchor.set(0.5, 0.5);
       FireBtn.buttonMode = true;
-      FireBtn.interactive = true;
       FireBtn.on('pointertap', () => {
         FireBtnTexture.frame = new PIXI.Rectangle(FireBtnOriginWidth / 2, 0, FireBtnOriginWidth / 2, FireBtnTexture.height);
 
@@ -270,9 +273,21 @@ export default function play(options = {}) {
       }
     }
 
-    function _eventLoop(detail) {
+    function _renderLoop(detail) {
       _statusContainer.comboNumEventLoop(detail);
       _statusContainer.chargeBarEventLoop(detail);
+    }
+
+    function _bindEvent() {
+      MenuBtn.interactive = true;
+      FireBtn.interactive = true;
+      TouchBar.interactive = true;
+    }
+
+    function _unbindEvent() {
+      MenuBtn.interactive = false;
+      FireBtn.interactive = false;
+      TouchBar.interactive = false;
     }
   }
 }
