@@ -39,13 +39,13 @@ export default function entry() {
       MapBtnTexture = PIXI.utils.TextureCache['MapBtn'], MapBtnOriginHeight = MapBtnTexture.height;
     let nowMapStep = 0, loopStep = 0,
       MapIcon, MapBtn, MapLeftArrowBtn, MapRightArrowBtn,
-      PlayerBg, PlayerBtn,
+      PlayerBg, PlayerBtn, PlayMapBg, PlayMapBtn,
       StartBtn, StartArrow;
 
     _renderMap();
     _renderPlayer();
     _renderOther();
-    app.ticker.add(_eventLoop);
+    app.ticker.add(_renderLoop);
 
 
     // 地图
@@ -54,7 +54,7 @@ export default function entry() {
       MapIcon = new PIXI.Sprite(MapIconTexture);
       MapIcon.anchor.set(0.5, 0.5);
       MapIcon.x = gameWidth * 0.25;
-      MapIcon.y = gameHeight * 0.35;
+      MapIcon.y = gameHeight * 0.4;
       MapIcon.direction = false;
 
       MapBtnTexture.frame = new PIXI.Rectangle(0, MapBtnOriginHeight / 10 * (nowMapStep * 2 + 1), MapBtnTexture.width, MapBtnOriginHeight / 10);
@@ -70,6 +70,8 @@ export default function entry() {
       MapLeftArrowBtn.anchor.set(0.5, 0.5);
       MapLeftArrowBtn.x = MapBtn.x - MapBtn.width / 2 - MapLeftArrowBtn.width / 3 + 28;
       MapLeftArrowBtn.y = MapIcon.y;
+      MapLeftArrowBtn.width = MapLeftArrowBtn.width * 0.68;
+      MapLeftArrowBtn.width = MapLeftArrowBtn.height * 0.68;
       MapLeftArrowBtn.buttonMode = true;
       MapLeftArrowBtn.interactive = true;
       MapLeftArrowBtn.rotation = Math.PI;
@@ -79,6 +81,8 @@ export default function entry() {
       MapRightArrowBtn.anchor.set(0.5, 0.5);
       MapRightArrowBtn.x = MapBtn.x + MapBtn.width / 2 + MapRightArrowBtn.width / 3 - 28;
       MapRightArrowBtn.y = MapIcon.y;
+      MapRightArrowBtn.width = MapRightArrowBtn.width * 0.68;
+      MapRightArrowBtn.width = MapRightArrowBtn.height * 0.68;
       MapRightArrowBtn.buttonMode = true;
       MapRightArrowBtn.interactive = true;
       MapRightArrowBtn.on('pointertap', () => _changeMap());
@@ -98,14 +102,21 @@ export default function entry() {
 
     // 人物
     function _renderPlayer() {
-      PlayerBg = PIXI.Sprite.from('PlayerBg');
+      PlayerBg = new PIXI.Sprite.from('PlayerBg');
       PlayerBg.anchor.set(0.5, 0.5);
       PlayerBg.x = gameWidth * 2.8 / 4;
-      PlayerBg.y = gameHeight * 0.4;
+      PlayerBg.y = gameHeight * 0.3;
+      PlayerBg.height = PlayerBg.height * 0.8;
 
-      PlayerBtn = PIXI.Sprite.from('PlayerBtn');
+      PlayMapBg = new PIXI.Sprite.from('PlayerBg');
+      PlayMapBg.anchor.set(0.5, 0.5);
+      PlayMapBg.x = PlayerBg.x;
+      PlayMapBg.y = PlayerBg.y + PlayerBg.height;
+      PlayMapBg.height = PlayerBg.height;
+
+      PlayerBtn = new PIXI.Sprite.from('PlayerBtn');
       PlayerBtn.anchor.set(0.5, 0.5);
-      PlayerBtn.x = PlayerBg.x + (PlayerBg.width) / 2 ;
+      PlayerBtn.x = PlayerBg.x + (PlayerBg.width) / 2;
       PlayerBtn.y = PlayerBg.y;
       PlayerBtn.width = PlayerBtn.width * 2.2;
       PlayerBtn.height = PlayerBtn.height * 2.2;
@@ -114,7 +125,18 @@ export default function entry() {
       PlayerBtn.on('pointertap', () => {
       });
 
-      entryViewStage.addChild(PlayerBg, PlayerBtn);
+      PlayMapBtn = new PIXI.Sprite.from('PlayerBtn');
+      PlayMapBtn.anchor.set(0.5, 0.5);
+      PlayMapBtn.x = PlayerBtn.x;
+      PlayMapBtn.y = PlayMapBg.y;
+      PlayMapBtn.width = PlayerBtn.width;
+      PlayMapBtn.height = PlayerBtn.height;
+      PlayMapBtn.buttonMode = true;
+      PlayMapBtn.interactive = true;
+      PlayMapBtn.on('pointertap', () => {
+      });
+
+      entryViewStage.addChild(PlayerBg, PlayerBtn, PlayMapBg, PlayMapBtn);
     }
 
     // 杂项
@@ -143,7 +165,7 @@ export default function entry() {
       StartBtn = new PIXI.Sprite.from(StartBtnTexture);
       StartBtn.anchor.set(0.5, 0.5);
       StartBtn.x = PlayerBg.x;
-      StartBtn.y = gameHeight * 0.85;
+      StartBtn.y = gameHeight * 0.885;
       StartBtn.buttonMode = true;
       StartBtn.interactive = true;
       StartBtn.on('pointertap', () => {
@@ -166,7 +188,7 @@ export default function entry() {
       entryViewStage.addChild(MenuBtn, StartArrow, StartBtn);
     }
 
-    function _eventLoop() {
+    function _renderLoop() {
       // 地图图标
       if (MapIcon.direction) {
         MapIcon.y += 0.38;
@@ -192,7 +214,7 @@ export default function entry() {
     }
 
     function _changeStage() {
-      app.ticker.remove(_eventLoop);
+      app.ticker.remove(_renderLoop);
       entryViewStage.removeChild(MapLeftArrowBtn, MapRightArrowBtn, StartArrow, StartBtn);
       setTimeout(() => app.stage.removeChild(entryViewStage), 1500);
     }
