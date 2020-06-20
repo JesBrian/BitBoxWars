@@ -3,7 +3,7 @@ import '../libs/pixi.min.js';
 import '../libs/unsafe-eval.min.js';
 import { DOMParser } from '../libs/xmldom/xmldom.js';
 
-import Utils from '../utils/functions.js';
+import Utils from '../utils/dashUtils.js';
 
 window.Utils = Utils;
 window.DOMParser = DOMParser;

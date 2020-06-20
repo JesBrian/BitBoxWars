@@ -1,4 +1,5 @@
 import MenuModule from './views/MenuModule.js';
+import { computedRadius, computedAngles, computedAnglesToRadian, computedAnglesToPoint } from '../../utils/roundUtils.js';
 
 /**
  * 需要加载的资源
@@ -141,9 +142,9 @@ export default function play(options = {}) {
       let MenuBtnTexture = PIXI.utils.TextureCache['MenuBtn'], MenuBtnOriginWidth = MenuBtnTexture.width * 3;
       MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 1, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
       MenuBtn = new PIXI.Sprite.from(MenuBtnTexture);
-      MenuBtn.x = TopBar.x + TopBar.width / 2;
-      MenuBtn.y = 0;
-      MenuBtn.anchor.set(0.5, 0);
+      MenuBtn.x = gameWidth;
+      MenuBtn.y = ComboBar.y + ComboBar.height / 2 + MenuBtn.height / 2;
+      MenuBtn.anchor.set(1, 0.5);
       MenuBtn.buttonMode = true;
       MenuBtn.on('pointertap', () => {
         MenuModule({
@@ -187,21 +188,23 @@ export default function play(options = {}) {
     }
 
     function _controllerContainer() {
+      const MAX_RADIUS = 135;
+
       TouchBar = PIXI.Sprite.from('TouchBar');
-      TouchBar.width = 228;
-      TouchBar.height = 228;
+      TouchBar.width = 218;
+      TouchBar.height = 218;
       TouchBar.x = TouchBar.width + 38;
-      TouchBar.y = gameHeight - TouchBar.height / 2 - 68;
+      TouchBar.y = gameHeight - TouchBar.height / 2 - 88;
       TouchBar.anchor.set(0.5, 0.5);
       TouchBar.buttonMode = true;
       TouchBar.on('touchstart', onDragStart)
-      .on('touchend', onDragEnd)
+      .on('touchmove', onDragMove)
       .on('touchendoutside', onDragEnd)
-      .on('touchmove', onDragMove);
+      .on('touchend', onDragEnd);
 
       let TouchBtn = PIXI.Sprite.from('TouchBtn');
-      TouchBtn.width = 88;
-      TouchBtn.height = 88;
+      TouchBtn.width = 80;
+      TouchBtn.height = 80;
       TouchBtn.x = TouchBar.x;
       TouchBtn.y = TouchBar.y;
       TouchBtn.anchor.set(0.5, 0.5);
@@ -211,17 +214,26 @@ export default function play(options = {}) {
         this.dragging = true;
       }
 
-      function onDragEnd(event) {
-        this.dragging = false;
-        this.data = null;
-      }
-
       function onDragMove(event) {
         if (this.dragging) {
-          const {x, y} = this.data.getLocalPosition(this.parent);
+          let {x, y} = this.data.getLocalPosition(this.parent), tmpPoint = {x, y};
+          const tmpRadius = computedRadius(TouchBar, tmpPoint);
+          if (tmpRadius > MAX_RADIUS) {
+            const tmpAngles = computedAngles(TouchBar, tmpPoint);
+            const targetPoint = computedAnglesToPoint(TouchBar, tmpAngles, MAX_RADIUS);
+            x = targetPoint.x;
+            y = targetPoint.y;
+          }
           TouchBtn.x = x;
           TouchBtn.y = y;
         }
+      }
+
+      function onDragEnd(event) {
+        this.dragging = false;
+        this.data = null;
+        TouchBtn.x = TouchBar.x;
+        TouchBtn.y = TouchBar.y;
       }
 
       FireBtnTexture = PIXI.utils.TextureCache['FireBtn'];
