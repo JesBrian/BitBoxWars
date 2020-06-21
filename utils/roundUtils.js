@@ -77,7 +77,7 @@ const computedRadianToPoint = (basePoint = {x: 0, y: 0}, radian = 0, radius = 0)
 };
 
 /**
- * 角度转换坐标 - [弧度转换坐标同理 -> 弧度转换角度再调用该方法]
+ * 角度转换坐标 - [和弧度转换坐标同理 -> 方法内部弧度转换角度]
  * @param basePoint 原点
  * @param angles 角度
  * @param radius 半径

@@ -1,4 +1,6 @@
 
+import MenuView from '../MenuView/index.js';
+
 /**
  * 需要加载的资源
  */
@@ -152,12 +154,16 @@ export default function entry() {
       MenuBtn.buttonMode = true;
       MenuBtn.interactive = true;
       MenuBtn.on('pointertap', () => {
-        MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 0, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
-
-        // TODO: 去抖 && 节流
-        setTimeout(() => {
-          MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 1, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
-        }, 1000);
+        MenuView({
+          initCallBack: () => {
+            MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 0, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
+            app.ticker.remove(_renderLoop);
+          },
+          destroyCallBack: () => {
+            MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 1, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
+            app.ticker.add(_renderLoop);
+          }
+        }).init();
       });
 
       let StartBtnTexture = PIXI.utils.TextureCache['StartBtn'], StartBtnOriginHeight = StartBtnTexture.height;

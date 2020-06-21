@@ -1,4 +1,4 @@
-import CloseBtn from '../../../app/components/CloseBtn/index.js';
+import CloseBtn from '../../components/CloseBtn/index.js';
 
 /**
  * 需要加载的资源
@@ -7,7 +7,7 @@ const MENU_MODULE_LOAD_RESOURCE = {
   Mask: 'static/images/Mask.png',
 };
 
-export default function MenuModule(options) {
+export default function MenuView(options) {
   let menuOptions = {
     initCallBack: Utils.noop,
     renderCallBack: Utils.noop,
@@ -52,9 +52,9 @@ export default function MenuModule(options) {
     menuOptions.destroyCallBack && menuOptions.destroyCallBack();
   }
 
-  MenuModule.init = _init;
-  MenuModule.render = _render;
-  MenuModule.destroy = _destroy;
+  MenuView.init = _init;
+  MenuView.render = _render;
+  MenuView.destroy = _destroy;
 
-  return MenuModule;
+  return MenuView;
 }

@@ -1,5 +1,5 @@
 import MenuModule from './views/MenuModule.js';
-import { computedRadius, computedAngles, computedAnglesToRadian, computedAnglesToPoint } from '../../utils/roundUtils.js';
+import { computedRadius, computedRadianToPoint } from '../../utils/roundUtils.js';
 
 /**
  * 需要加载的资源
@@ -158,8 +158,7 @@ export default function play(options = {}) {
             app.ticker.add(_renderLoop);
             _bindEvent();
           }
-        });
-        MenuModule.init();
+        }).init();
       });
 
 
@@ -219,8 +218,7 @@ export default function play(options = {}) {
           let {x, y} = this.data.getLocalPosition(this.parent), tmpPoint = {x, y};
           const tmpRadius = computedRadius(TouchBar, tmpPoint);
           if (tmpRadius > MAX_RADIUS) {
-            const tmpAngles = computedAngles(TouchBar, tmpPoint);
-            const targetPoint = computedAnglesToPoint(TouchBar, tmpAngles, MAX_RADIUS);
+            const targetPoint = computedRadianToPoint(TouchBar, tmpRadius, MAX_RADIUS);
             x = targetPoint.x;
             y = targetPoint.y;
           }
