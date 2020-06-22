@@ -43,7 +43,12 @@ export default function CloseBtn(options) {
       CloseBtnTexture.frame = new PIXI.Rectangle(CloseBtnOriginWidth / 3 * 2, 0, CloseBtnOriginWidth / 3, CloseBtnTexture.height);
     }).on('pointertap', () => {
       closeBtnOptions.clickCallBack && closeBtnOptions.clickCallBack();
-      CloseBtnTexture.frame = new PIXI.Rectangle(0, 0, CloseBtnOriginWidth, CloseBtnTexture.height);
     });
   }
+
+  function _remove() {
+    CloseBtnTexture.frame = new PIXI.Rectangle(0, 0, CloseBtnOriginWidth, CloseBtnTexture.height);
+  }
+
+  CloseBtn.removeCallBack = _remove;
 }
