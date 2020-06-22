@@ -1,5 +1,5 @@
 import MenuModule from './views/MenuModule.js';
-import { computedRadius, computedRadianToPoint } from '../../utils/roundUtils.js';
+import { computedRadius, computedAngles, computedAnglesToPoint } from '../../utils/roundUtils.js';
 
 /**
  * 需要加载的资源
@@ -193,7 +193,7 @@ export default function play(options = {}) {
       TouchBar.width = 218;
       TouchBar.height = 218;
       TouchBar.x = TouchBar.width + 38;
-      TouchBar.y = gameHeight - TouchBar.height / 2 - 88;
+      TouchBar.y = gameHeight - TouchBar.height / 2 - 95;
       TouchBar.anchor.set(0.5, 0.5);
       TouchBar.buttonMode = true;
       TouchBar.on('touchstart', onDragStart)
@@ -202,8 +202,8 @@ export default function play(options = {}) {
       .on('touchend', onDragEnd);
 
       let TouchBtn = PIXI.Sprite.from('TouchBtn');
-      TouchBtn.width = 80;
-      TouchBtn.height = 80;
+      TouchBtn.width = 68;
+      TouchBtn.height = 68;
       TouchBtn.x = TouchBar.x;
       TouchBtn.y = TouchBar.y;
       TouchBtn.anchor.set(0.5, 0.5);
@@ -211,20 +211,11 @@ export default function play(options = {}) {
       function onDragStart(event) {
         this.data = event.data;
         this.dragging = true;
+        _renderRocker(this);
       }
 
       function onDragMove(event) {
-        if (this.dragging) {
-          let {x, y} = this.data.getLocalPosition(this.parent), tmpPoint = {x, y};
-          const tmpRadius = computedRadius(TouchBar, tmpPoint);
-          if (tmpRadius > MAX_RADIUS) {
-            const targetPoint = computedRadianToPoint(TouchBar, tmpRadius, MAX_RADIUS);
-            x = targetPoint.x;
-            y = targetPoint.y;
-          }
-          TouchBtn.x = x;
-          TouchBtn.y = y;
-        }
+        if (this.dragging) _renderRocker(this);
       }
 
       function onDragEnd(event) {
@@ -269,6 +260,18 @@ export default function play(options = {}) {
       // RightSwitchBtn.rotation = Math.PI;
 
       playViewStage.addChild(MenuBtn, TouchBar, TouchBtn, FireBtn, LeftSwitchBtn, RightSwitchBtn);
+
+      function _renderRocker(touchTarget) {
+        let {x, y} = touchTarget.data.getLocalPosition(touchTarget.parent), tmpPoint = {x, y};
+        const tmpRadius = computedRadius(TouchBar, tmpPoint);
+        if (tmpRadius > MAX_RADIUS) {
+          const targetPoint = computedAnglesToPoint(TouchBar, computedAngles(TouchBar, tmpPoint), MAX_RADIUS);
+          x = targetPoint.x;
+          y = targetPoint.y;
+        }
+        TouchBtn.x = x;
+        TouchBtn.y = y;
+      }
     }
 
     function _playContainer() {
