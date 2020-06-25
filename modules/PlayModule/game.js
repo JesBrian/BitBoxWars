@@ -77,7 +77,7 @@ export default function play(options = {}) {
       ChargeBar.anchor.set(0, 0);
       ChargeBar.x = gameWidth / 2 - ChargeBarOriginWidth / 2;
       ChargeBar.y = TopBar.height * 0.195;
-      ChargeBar.width = ChargeBarTexture.width * 1.38;
+      ChargeBar.width = ChargeBarTexture.width * 1.38 || 0.01;
       ChargeBar.height = ChargeBar.height * 1.2;
 
       let EmptyCharge = PIXI.Sprite.from('EmptyCharge');
@@ -93,6 +93,7 @@ export default function play(options = {}) {
       FullCharge.y = TopBar.height * 0.08;
       FullCharge.width = FullCharge.width * 2.25;
       FullCharge.height = FullCharge.height * 2;
+      FullCharge.visible = false;
 
       let spriteFrame = new PIXI.Sprite.from('StatusBar');
       spriteFrame.x = 38;
@@ -175,15 +176,22 @@ export default function play(options = {}) {
       }
 
       _statusContainer.chargeBarEventLoop = (detail) => {
-        if (ChargeBar.width + 1.8 > ChargeBarOriginWidth) {
+        let _this = _statusContainer.chargeBarEventLoop;
+        if ((ChargeBar.width || 0) + 1.8 <= ChargeBarOriginWidth && _this.countDown === 100) {
+          ChargeBarTexture.frame = new PIXI.Rectangle(0, 0, ChargeBarTexture.width + 0.8, ChargeBarTexture.height);
+        } else if (_this.countDown >= 0 && _this.countDown <= 100) {
+          _this.countDown -= detail;
+          FullCharge.visible = true;
+        } else {
+          _this.countDown = 100;
+          FullCharge.visible = false;
           ChargeBarTexture.frame = new PIXI.Rectangle(0, 0, 0, ChargeBarTexture.height);
           nowScore = `000${nowScore * 1 - 1}`.slice(-3);
           _renderComboNum();
-        } else {
-          ChargeBarTexture.frame = new PIXI.Rectangle(0, 0, ChargeBarTexture.width + 0.8, ChargeBarTexture.height);
         }
         ChargeBar.width = ChargeBarTexture.width * 1.38;
       }
+      _statusContainer.chargeBarEventLoop.countDown = 100;
     }
 
     function _controllerContainer() {
