@@ -50,6 +50,7 @@ export default function MenuView(options) {
   function _destroy() {
     app.stage.removeChild(menuStage);
     menuOptions.destroyCallBack && menuOptions.destroyCallBack();
+    CloseBtn.removeCallBack();
   }
 
   MenuView.init = _init;
