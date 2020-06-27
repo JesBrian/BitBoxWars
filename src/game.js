@@ -1,6 +1,7 @@
 
-import './core/manifest';
-import App from './app/app.js';
+import './libs/manifest';
 
+console.log(window)
 
-App();
+// import App from './app/app.js';
+// App();
