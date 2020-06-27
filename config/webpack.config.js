@@ -7,18 +7,17 @@ const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
     entry: {
-        game: ['core-js/modules/es.array.iterator', '@iro/wechat-adapter', path.resolve(__dirname, 'src/game/app.js')],
-        'openDataContext/index': [path.resolve(__dirname, 'src/openDataContext/app.js')]
+        game: ['core-js/modules/es.array.iterator', '@iro/wechat-adapter', path.resolve(__dirname, '../src/game.js')],
     },
 
     output: {
-        path: path.resolve(__dirname, 'dist/root'),
+        path: path.resolve(__dirname, '../dist/'),
         filename: '[name].js'
     },
 
     resolve: {
         alias: {
-            '@': path.resolve('.')
+            // '@': path.resolve('.')
         }
     },
 
@@ -42,16 +41,19 @@ module.exports = {
 
     plugins: [
         new CleanWebpackPlugin(),
+
         new webpack.ProvidePlugin({
-            dayjs: 'dayjs',
             PIXI: 'pixi.js',
         }),
-        new CopyWebpackPlugin([
-            {from: 'src/cloud', to: '../cloud'},
-            {from: 'src/project.config.json', to: '../project.config.json'},
-            {from: 'src/game.json', to: 'game.json'},
-            {from: 'src/static/dist', to: 'static'}
-        ])
+
+        new CopyWebpackPlugin({
+            patterns: [
+                {from: 'src/project.config.json', to: 'project.config.json'},
+                {from: 'src/game.json', to: 'game.json'},
+                {from: 'src/static', to: 'static'},
+                {from: 'src/modules', to: 'modules'}
+            ]
+        })
     ],
 
     mode: isProd ? 'production' : 'development'

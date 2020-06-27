@@ -4,8 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "webpack --watch --progress --color",
-        "build": "cross-env NODE_ENV=production webpack"
+        "dev": "webpack --config ./config/webpack.config.js --watch --progress --color",
+        "build": "cross-env NODE_ENV=production webpack --config ./config/webpack.config.js"
     },
     "repository": {
         "type": "git",
@@ -44,7 +44,6 @@
         "webpack-cli": "^3.3.12"
     },
     "dependencies": {
-        "dayjs": "^1.8.28",
         "pixi.js": "^5.3.0"
     }
 }
