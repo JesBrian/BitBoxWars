@@ -12,8 +12,8 @@ export default function CloseBtn(options) {
     scale: 1,
     anchor: [0, 0],
     position: {x: 0, y: 0},
-    initCallBack: Utils.noop,
-    clickCallBack: Utils.noop,
+    initCallBack: DashUtils.noop,
+    clickCallBack: DashUtils.noop,
   }, CloseBtnSprite, CloseBtnTexture, CloseBtnOriginWidth;
   Object.assign(closeBtnOptions, options);
 

@@ -2,7 +2,7 @@ const ticker = PIXI.Ticker.shared;
 const loader = PIXI.Loader.shared;
 const stage = new PIXI.Container();
 const monitor = new PIXI.utils.EventEmitter();
-const pixelRatio = Math.min(2, devicePixelRatio);
+const pixelRatio = 1;
 
 const renderer = new PIXI.Renderer({
     view: canvas,
@@ -14,7 +14,7 @@ const renderer = new PIXI.Renderer({
 
 renderer.plugins.accessibility.destroy();
 renderer.plugins.interaction.mapPositionToPoint = (point, x, y) => {
-    point.set(x * pixelRatio, y * pixelRatio);
+    point.set(x * scaleX, y * scaleY);
 };
 
 ticker.add(() => renderer.render(stage));

@@ -56,12 +56,12 @@ export default function play(options = {}) {
       TopBar, MenuBtn, TouchBar,
       FireBtn, FireBtnTexture, FireBtnOriginWidth = 0;
 
-    app.stage.addChild(playViewStage);
+    app.addChild(playViewStage);
     _statusContainer();
     _controllerContainer();
     _playContainer();
     _bindEvent();
-    app.ticker.add(_renderLoop);
+    ticker.add(_renderLoop);
 
     function _statusContainer() {
       TopBar = PIXI.Sprite.from('TopBar');
@@ -151,12 +151,12 @@ export default function play(options = {}) {
         MenuModule({
           initCallBack: () => {
             MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 0, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
-            app.ticker.remove(_renderLoop);
+            ticker.remove(_renderLoop);
             _unbindEvent();
           },
           destroyCallBack: () => {
             MenuBtnTexture.frame = new PIXI.Rectangle(MenuBtnOriginWidth / 3 * 1, 0, MenuBtnOriginWidth / 3, MenuBtnTexture.height);
-            app.ticker.add(_renderLoop);
+            ticker.add(_renderLoop);
             _bindEvent();
           }
         }).init();

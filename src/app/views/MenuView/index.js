@@ -9,9 +9,9 @@ const MENU_MODULE_LOAD_RESOURCE = {
 
 export default function MenuView(options) {
   let menuOptions = {
-    initCallBack: Utils.noop,
-    renderCallBack: Utils.noop,
-    destroyCallBack: Utils.noop,
+    initCallBack: DashUtils.noop,
+    renderCallBack: DashUtils.noop,
+    destroyCallBack: DashUtils.noop,
   }, menuStage;
   Object.assign(menuOptions, options);
 
@@ -26,7 +26,7 @@ export default function MenuView(options) {
   }
 
   function _render() {
-    app.stage.addChild(menuStage);
+    app.addChild(menuStage);
     menuStage.width = gameWidth;
     menuStage.height = gameHeight;
 
@@ -48,7 +48,7 @@ export default function MenuView(options) {
   }
 
   function _destroy() {
-    app.stage.removeChild(menuStage);
+    app.removeChild(menuStage);
     menuOptions.destroyCallBack && menuOptions.destroyCallBack();
     CloseBtn.removeCallBack();
   }
