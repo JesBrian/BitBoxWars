@@ -23,10 +23,10 @@ export default function CloseBtn(options) {
   }).then(_render);
 
   function _render() {
-    CloseBtnTexture = PIXI.utils.TextureCache['CloseBtn'];
+    CloseBtnTexture = PixiUtils.getTexture('CloseBtn');
     CloseBtnOriginWidth = CloseBtnTexture.width;
     CloseBtnTexture.frame = new PIXI.Rectangle(CloseBtnOriginWidth / 3 * 2, 0, CloseBtnOriginWidth / 3, CloseBtnTexture.height);
-    CloseBtnSprite = new PIXI.Sprite(CloseBtnTexture);
+    CloseBtnSprite = PixiUtils.genSprite(CloseBtnTexture);
     CloseBtnSprite.x = closeBtnOptions.position.x;
     CloseBtnSprite.y = closeBtnOptions.position.y;
     CloseBtnSprite.width *= closeBtnOptions.scale;

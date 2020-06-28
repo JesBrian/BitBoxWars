@@ -1,6 +1,3 @@
-import CloseBtn from '../../../app/components/CloseBtn/index.js';
-import MainBtn from '../../../app/components/MainBtn/index.js';
-
 /**
  * 需要加载的资源
  */
@@ -31,18 +28,18 @@ export default function MenuModule(options) {
     menuStage.width = gameWidth;
     menuStage.height = gameHeight;
 
-    const MaskBg = PIXI.Sprite.from('Mask');
+    const MaskBg = PixiUtils.genSprite('Mask');
     MaskBg.width = gameWidth;
     MaskBg.height = gameHeight;
 
-    CloseBtn({
+    closeBtn({
       scale: 1.5,
       position: {x: 38, y: 38},
       initCallBack: (closeBtn) => {
         menuStage.addChild(closeBtn);
 
 
-        MainBtn({
+        mainBtn({
           scale: 0.88,
           position: {x: 138, y: 138},
           initCallBack: (mainBtn) => {
@@ -59,8 +56,8 @@ export default function MenuModule(options) {
   }
 
   function _destroy() {
-    MainBtn.removeCallBack();
-    CloseBtn.removeCallBack();
+    mainBtn.removeCallBack();
+    closeBtn.removeCallBack();
     app.removeChild(menuStage);
     menuOptions.destroyCallBack && menuOptions.destroyCallBack();
   }

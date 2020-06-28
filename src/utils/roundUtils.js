@@ -87,7 +87,7 @@ const computedAnglesToPoint = (basePoint = {x: 0, y: 0}, angles = 0, radius = 0)
   return computedRadianToPoint(basePoint, computedAnglesToRadian(angles), radius);
 };
 
-export {
+export default {
   computedRadius,
   computedAngles,
   computedRadianToAngles,
