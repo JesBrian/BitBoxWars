@@ -1,3 +1,5 @@
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const path = require('path');
@@ -40,6 +42,8 @@ module.exports = {
     },
 
     plugins: [
+        // new BundleAnalyzerPlugin(),
+
         new CleanWebpackPlugin(),
 
         new webpack.ProvidePlugin({
