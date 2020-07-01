@@ -1,46 +1,46 @@
-
-const noop = () => {};
+const noop = () => {
+};
 
 function debounceOrThrottle({fn, wait = 300, immediate = false, executeOncePerWait = false}) {
-  if (typeof fn !== 'function') {
-    throw new Error('fn is expected to be a function')
-  }
-
-  let tId = null, _this = null, args = null, lastTriggerTime = null, result = null, lastExecutedTime = null;
-
-  const later = function () {
-    const last = Date.now() - (executeOncePerWait ? lastExecutedTime : lastTriggerTime);
-    if (last < wait && last > 0) {
-      setTimeout(later, wait - last);
-    } else {
-      if (!immediate) {
-        executeOncePerWait && (lastExecutedTime = Date.now());
-        result = fn.apply(_this, args);
-        _this = args = null;
-      }
-      tId = null;
-    }
-  }
-
-  return function () {
-    _this = this;
-    args = arguments;
-    !executeOncePerWait && (lastTriggerTime = Date.now());
-    const callNow = immediate && !tId;
-
-    if (!tId) {
-      executeOncePerWait && (lastExecutedTime = Date.now());
-      tId = setTimeout(later, wait);
+    if (typeof fn !== 'function') {
+        throw new Error('fn is expected to be a function')
     }
 
-    if (callNow) {
-      executeOncePerWait && (lastExecutedTime = Date.now());
-      result = fn.apply(_this, args);
-      _this = args = null;
+    let tId = null, _this = null, args = null, lastTriggerTime = null, result = null, lastExecutedTime = null;
+
+    const later = function () {
+        const last = Date.now() - (executeOncePerWait ? lastExecutedTime : lastTriggerTime);
+        if (last < wait && last > 0) {
+            setTimeout(later, wait - last);
+        } else {
+            if (!immediate) {
+                executeOncePerWait && (lastExecutedTime = Date.now());
+                result = fn.apply(_this, args);
+                _this = args = null;
+            }
+            tId = null;
+        }
     }
 
-    return result;
-  }
+    return function () {
+        _this = this;
+        args = arguments;
+        !executeOncePerWait && (lastTriggerTime = Date.now());
+        const callNow = immediate && !tId;
+
+        if (!tId) {
+            executeOncePerWait && (lastExecutedTime = Date.now());
+            tId = setTimeout(later, wait);
+        }
+
+        if (callNow) {
+            executeOncePerWait && (lastExecutedTime = Date.now());
+            result = fn.apply(_this, args);
+            _this = args = null;
+        }
+
+        return result;
+    }
 }
 
 /**
@@ -67,20 +67,25 @@ const throttle = ({fn, wait, immediate = true}) => debounceOrThrottle({fn, wait,
  * @returns {Promise}
  */
 const loadSubModule = (moduleName = '') => {
-  return new Promise((resolve, reject) => {
-    if (!moduleName) return reject(new Error('请输入模块名'));
-    const loadTask = wx.loadSubpackage({
-      name: `${moduleName}Module`,
-      success: res => {
-        return resolve(res);
-      },
-      fail: err => {
-        return reject(err);
-      }
+    return new Promise((resolve, reject) => {
+        if (!moduleName) return reject(new Error('请输入模块名'));
+        wx.showLoading({
+            mask: true,
+            title: '加载中',
+        });
+        const loadTask = wx.loadSubpackage({
+            name: `${moduleName}Module`,
+            success: res => {
+                wx.hideLoading();
+                return resolve(res);
+            },
+            fail: err => {
+                return reject(err);
+            }
+        });
     });
-  });
 }
 
 export default {
-  noop, debounce, throttle, loadSubModule
+    noop, debounce, throttle, loadSubModule
 };

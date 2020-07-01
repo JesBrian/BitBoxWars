@@ -17,11 +17,11 @@ module.exports = {
         filename: '[name].js'
     },
 
-    resolve: {
-        alias: {
-            // '@': path.resolve('.')
-        }
-    },
+    // resolve: {
+    //     alias: {
+    //         '@': path.resolve('.')
+    //     }
+    // },
 
     devtool: isProd ? false : 'source-map',
 
